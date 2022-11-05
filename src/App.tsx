@@ -1,10 +1,10 @@
-import DefaultLayout from "layouts/DefaultLayout";
+import Router from "router";
 import "css/global.css";
 
 const App = () => {
   return (
     <div className="App">
-      <DefaultLayout />
+      <Router />
     </div>
   );
 }

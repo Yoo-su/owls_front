@@ -15,10 +15,11 @@ export const Sidebar = styled.div<Prop>`
     display:flex;
     flex-direction: column;
     align-items: center;
-    background-color:#ae907a;
     overflow:hidden;
     transition:width 0.3s ease-in-out;
-
+    border-right:0.5px solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.1);
+    
     .sidebarHeader{
         display:flex;
         width:100%;
@@ -27,6 +28,7 @@ export const Sidebar = styled.div<Prop>`
         align-items: center;
         font-family: 'Island Moments', cursive;
         font-size: 32px;
+        border-bottom:0.5px solid rgba(0,0,0,0.1);
         
         img{
             width:32px;
@@ -40,7 +42,6 @@ export const Sidebar = styled.div<Prop>`
         font-family: 'Roboto Slab', serif;
         width:100%;
         li{
-            color:white;
             display:flex;
             align-items: center;
             cursor:pointer;

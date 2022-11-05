@@ -3,8 +3,9 @@ import { Wrapper, Sidebar, Content, Appbar } from "./styles";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
+import { DefaultLayoutProps } from "./types";
 
-const DefaultLayout = () => {
+const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const [sidebarWidth, setSidebarWidth] = useState(260);
     const [appbarHeight, setAppbarHeight] = useState(70);
 
@@ -41,7 +42,7 @@ const DefaultLayout = () => {
             </Appbar>
 
             <Content sidebarWidth={sidebarWidth} appbarHeight={appbarHeight}>
-                content
+                {children}
             </Content>
         </Wrapper>
     )
