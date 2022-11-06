@@ -4,9 +4,11 @@ import {
     getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import userReducer from "./slice/userSlice";
+import postReducer from "./slice/postSlice";
 
 const rootReducer = combineReducers({
-    user: userReducer
+    user: userReducer,
+    post: postReducer
 });
 
 const store = configureStore({
