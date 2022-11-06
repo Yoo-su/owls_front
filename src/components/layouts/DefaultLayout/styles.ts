@@ -46,7 +46,10 @@ export const Sidebar = styled.div<Prop>`
             align-items: center;
             cursor:pointer;
             justify-content: center;
-            
+            padding:1rem 0;
+            margin:0 0.5rem;
+            border-radius:10px;
+
             .MuiSvgIcon-root{
                 width:35px;
                 height:35px;
@@ -58,7 +61,7 @@ export const Sidebar = styled.div<Prop>`
             }
 
             :hover{
-                background-color: rgba(0,0,0,0.3);
+                background-color: rgba(0,0,0,0.2);
             }
         }
     }
@@ -70,6 +73,8 @@ export const Content = styled.main<Prop>`
     margin-top:${prop => prop.appbarHeight}px;
     padding:1rem;
     transition:all 0.3s ease-in-out;
+    background-color:#f9f6f2;
+    height:100vh;
 `;
 
 export const Appbar = styled.div<Prop>`
@@ -84,4 +89,19 @@ export const Appbar = styled.div<Prop>`
     padding:0 0.5rem;
     color:white;
     transition:all 0.3s ease-in-out;
+
+    .currentUser{
+        flex-grow:1;
+        display:flex;
+        justify-content: flex-end;
+        padding:0 2rem;
+
+        .MuiChip-root{
+            background-color: white;
+        }
+        
+        .MuiListItem-root{
+            font-size:8px;
+        }
+    }
 `;

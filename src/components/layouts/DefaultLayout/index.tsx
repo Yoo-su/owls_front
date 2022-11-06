@@ -1,11 +1,18 @@
-import { useState, useCallback } from "react";
+import { useState, memo } from "react";
 import { Wrapper, Sidebar, Content, Appbar } from "./styles";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
-import { DefaultLayoutProps } from "./types";
+import UserChip from "./UserChip";
+import { useAppSelector } from "store/hook";
+
+interface DefaultLayoutProps {
+    children: React.ReactElement;
+}
 
 const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+    const user = useAppSelector((state) => state.user);
+
     const [sidebarWidth, setSidebarWidth] = useState(260);
     const [appbarHeight, setAppbarHeight] = useState(70);
 
@@ -39,6 +46,11 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 >
                     <MenuIcon />
                 </IconButton>
+
+                <div className="currentUser">
+                    <UserChip profileImg="" nickname={user.userNickname} />
+                </div>
+
             </Appbar>
 
             <Content sidebarWidth={sidebarWidth} appbarHeight={appbarHeight}>
@@ -48,4 +60,4 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     )
 }
 
-export default DefaultLayout;
+export default memo(DefaultLayout);

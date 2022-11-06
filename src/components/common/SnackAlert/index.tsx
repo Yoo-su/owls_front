@@ -1,8 +1,14 @@
-import { Fragment } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Snackbar as Snack } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
-import { Props } from "./types";
+
+interface Props {
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+    msg: string;
+    alertType: "success" | "danger" | "info"
+};
 
 const SnackAlert = ({ open, setOpen, msg, alertType }: Props) => {
     const handleStyle = (type: string) => {
@@ -35,7 +41,7 @@ const SnackAlert = ({ open, setOpen, msg, alertType }: Props) => {
     };
 
     const action = (
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={handleClose}>
             <CloseIcon />
         </IconButton>
     );

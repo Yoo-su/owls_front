@@ -12,13 +12,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackAlert from 'components/common/SnackAlert';
 import { signin } from "api/user";
+import { useAppDispatch } from 'store/hook'
+import { setUser } from 'store/slice/userSlice';
 
 const theme = createTheme();
 
 const SignInPage = () => {
+    /* 스낵바 알림 관련 */
     const [openAlert, setOpenAlert] = React.useState(false);
     const [alertType, setAlertType] = React.useState<"success" | "danger" | "info">("success");
     const [alertMsg, setAlertMsg] = React.useState("");
+
+    /* 스토어 유저 상태 관련 */
+    const dispatch = useAppDispatch();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -31,10 +37,9 @@ const SignInPage = () => {
             .then(res => {
                 if (res.success === true) {
                     localStorage.setItem("token", res.access_token);
-                    setAlertMsg("로그인 되었습니다");
-                    setAlertType("success");
-                    setOpenAlert(true);
-
+                    localStorage.setItem("user", JSON.stringify(res.user));
+                    dispatch(setUser({ userEmail: res.user.email, userNickname: res.user.nickname }));
+                    window.location.href = "/";
                 }
                 else {
                     setAlertMsg("로그인 정보를 확인해주세요");
