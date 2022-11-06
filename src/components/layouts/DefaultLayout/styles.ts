@@ -74,11 +74,12 @@ export const Content = styled.main<Prop>`
     padding:1rem;
     transition:all 0.3s ease-in-out;
     background-color:#f9f6f2;
-    height:100vh;
+    min-height:100vh;
 `;
 
 export const Appbar = styled.div<Prop>`
     position:fixed;
+    z-index:10;
     top:0;
     width:calc(100% - ${prop => prop.sidebarWidth}px);
     margin-left:${prop => prop.sidebarWidth}px;
