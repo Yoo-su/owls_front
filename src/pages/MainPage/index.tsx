@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react'
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
+import MoodBadIcon from '@mui/icons-material/MoodBad';
 import PostInput from './PostInput';
-import { PostsWrapper } from './styles';
-import { sample } from './samplePosts';
+import { PostsWrapper, LoadingBox, EmptyContentBox } from './styles';
 import Post from './Post';
 import { useAppDispatch, useAppSelector } from "store/hook";
-import { setPosts } from "store/slice/postSlice";
+import { setPosts, setPostsLoading } from "store/slice/postSlice";
+import { getAllPosts } from 'api/post';
+
 
 const MainPage = () => {
     const dispatch = useAppDispatch();
-    const { posts } = useAppSelector((state) => state.post);
+    const { posts, postsLoading } = useAppSelector((state) => state.post);
 
     useEffect(() => {
-        dispatch(setPosts(sample));
+        getAllPosts().then(res => {
+            console.log(res);
+            dispatch(setPosts(res?.data));
+            dispatch(setPostsLoading(false));
+        });
     }, []);
 
     return (
@@ -20,9 +27,22 @@ const MainPage = () => {
             <PostInput />
 
             <PostsWrapper>
-                {posts.map((post, idx) => (
-                    <Post key={idx} {...post} />
-                ))}
+                <div className="postsHeader">
+                    게시물 목록 🦉
+                </div>
+                {postsLoading ? (
+                    <LoadingBox>
+                        <CircularProgress size={150} />
+                    </LoadingBox>) :
+                    (posts?.length > 0) ? posts.map(post => (
+                        <Post key={post.post_id} {...post} />
+                    )) : (
+                        <EmptyContentBox>
+                            <MoodBadIcon />
+                            <label>게시물이 존재하지 않습니다</label>
+                        </EmptyContentBox>)
+                }
+
             </PostsWrapper>
         </Container>
     )

@@ -3,32 +3,32 @@ import Chip from '@mui/material/Chip';
 import { PostBox } from "./styles"
 import { PostType } from "types"
 
-const Post = ({ author, authorProfileImg, postText, postImage = "", postedDate }: PostType) => {
+const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nickname, user_image }: PostType) => {
     return (
         <PostBox>
             <div className="postHeader">
                 <div className="profileImg">
                     <Avatar
                         alt=""
-                        src={authorProfileImg}
+                        src={user_image}
                         sx={{ width: 56, height: 56 }}
                     />
                 </div>
 
                 <div className="postInfo">
-                    <label className="author">{author}</label>
-                    <label className="postedDate">{postedDate}</label>
+                    <label className="author">{user_nickname}</label>
+                    <label className="postedDate">{post_date}</label>
                 </div>
             </div>
 
             <div className="postContent">
-                {postImage && (
+                {post_image && (
                     <div className="postImage">
-                        <img src={postImage} alt='' loading="lazy" />
+                        <img src={post_image} alt='' loading="lazy" />
                     </div>
                 )}
                 <div className="postText">
-                    <p>{postText}</p>
+                    <p>{post_text}</p>
                 </div>
             </div>
         </PostBox>
