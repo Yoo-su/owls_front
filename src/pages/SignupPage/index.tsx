@@ -3,26 +3,43 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import SnackAlert from 'components/common/SnackAlert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { signup } from 'api/user';
 
 const theme = createTheme();
 
 const SignupPage = () => {
+    /* 스낵바 알림 메시지 관련 state */
+    const [openAlert, setOpenAlert] = React.useState(false);
+    const [alertType, setAlertType] = React.useState<"success" | "danger" | "info">("success");
+    const [alertMsg, setAlertMsg] = React.useState("");
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+
+        signup(data.get("name") || '', data.get("nickname") || '', data.get("email") || '', data.get("password") || '')
+            .then(res => {
+                if (res.success === false) {
+                    setAlertMsg(res.msg);
+                    setAlertType("danger");
+                    setOpenAlert(true);
+                } else {
+                    setAlertMsg(res.msg);
+                    setAlertType("success");
+                    setOpenAlert(true);
+                    setTimeout(() => {
+                        window.location.href = "/signin";
+                    }, 2000);
+                }
+            })
     };
 
     return (
@@ -45,25 +62,15 @@ const SignupPage = () => {
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="name"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    id="name"
+                                    label="이름"
                                     autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -71,7 +78,7 @@ const SignupPage = () => {
                                     required
                                     fullWidth
                                     id="nickname"
-                                    label="nickname"
+                                    label="닉네임"
                                     name="nickname"
                                     autoComplete="nickname"
                                 />
@@ -81,7 +88,7 @@ const SignupPage = () => {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="이메일 주소"
                                     name="email"
                                     autoComplete="email"
                                 />
@@ -91,7 +98,7 @@ const SignupPage = () => {
                                     required
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    label="비밀번호"
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
@@ -116,6 +123,7 @@ const SignupPage = () => {
                     </Box>
                 </Box>
             </Container>
+            <SnackAlert open={openAlert} setOpen={setOpenAlert} msg={alertMsg} alertType={alertType} />
         </ThemeProvider>
     );
 }
