@@ -23,7 +23,6 @@ const SignInPage = () => {
     const [alertType, setAlertType] = React.useState<"success" | "danger" | "info">("success");
     const [alertMsg, setAlertMsg] = React.useState("");
 
-    /* 스토어 유저 상태 관련 */
     const dispatch = useAppDispatch();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,17 +31,21 @@ const SignInPage = () => {
 
         signin(data.get('email') || '', data.get('password') || '')
             .then(res => {
-                if (res.success === true) {
-                    localStorage.setItem("token", res.access_token);
-                    localStorage.setItem("user", JSON.stringify(res.user));
-                    dispatch(setUser({ userEmail: res.user.email, userNickname: res.user.nickname }));
-                    window.location.href = "/";
+                localStorage.setItem("token", res.data.access_token);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+                dispatch(setUser({ userEmail: res.data.user.email, userNickname: res.data.user.nickname }));
+                window.location.href = "/";
+            })
+            .catch((err) => {
+                if (err.response.data.statusCode === 401) {
+                    setAlertMsg("로그인 정보를 확인해주세요");
                 }
                 else {
-                    setAlertMsg("로그인 정보를 확인해주세요");
-                    setAlertType("danger");
-                    setOpenAlert(true);
+                    setAlertMsg("오류가 발생했습니다")
                 }
+                setAlertType("danger");
+                setOpenAlert(true);
+
             })
     };
 

@@ -27,18 +27,24 @@ const SignupPage = () => {
 
         signup(data.get("name") || '', data.get("nickname") || '', data.get("email") || '', data.get("password") || '')
             .then(res => {
-                if (res.success === false) {
-                    setAlertMsg(res.msg);
+                if (res.data.success === false) {
+                    setAlertMsg(res.data.msg);
                     setAlertType("danger");
                     setOpenAlert(true);
-                } else {
-                    setAlertMsg(res.msg);
+                }
+                else {
+                    setAlertMsg("회원가입이 완료되었습니다");
                     setAlertType("success");
                     setOpenAlert(true);
                     setTimeout(() => {
                         window.location.href = "/signin";
                     }, 2000);
                 }
+            })
+            .catch((err) => {
+                setAlertMsg("오류가 발생했습니다");
+                setAlertType("danger");
+                setOpenAlert(true);
             })
     };
 

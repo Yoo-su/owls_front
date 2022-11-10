@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
@@ -15,11 +15,15 @@ const MainPage = () => {
     const { posts, postsLoading } = useAppSelector((state) => state.post);
 
     useEffect(() => {
-        getAllPosts().then(res => {
-            console.log(res);
-            dispatch(setPosts(res?.data));
-            dispatch(setPostsLoading(false));
-        });
+        getAllPosts()
+            .then(res => {
+                dispatch(setPosts(res.data.posts));
+                dispatch(setPostsLoading(false));
+            })
+            .catch((err) => {
+                dispatch(setPosts([]));
+                dispatch(setPostsLoading(false));
+            })
     }, []);
 
     return (

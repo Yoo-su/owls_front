@@ -6,14 +6,11 @@ export const signin = async (user_email: FormDataEntryValue, user_password: Form
             user_email,
             user_password
         })
-
-        return result.data
-    } catch (err: any) {
-        return {
-            success: false,
-            ...err.response.data
-        }
+        return result
+    } catch (err) {
+        throw err
     }
+
 }
 
 export const signup = async (user_name: FormDataEntryValue, user_nickname: FormDataEntryValue, user_email: FormDataEntryValue, user_password: FormDataEntryValue) => {
@@ -25,11 +22,8 @@ export const signup = async (user_name: FormDataEntryValue, user_nickname: FormD
             user_password
         })
 
-        return result.data;
-    } catch (err: any) {
-        return {
-            success: false,
-            err: err
-        }
+        return result;
+    } catch (err) {
+        throw err
     }
 }

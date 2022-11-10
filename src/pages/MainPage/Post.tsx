@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import { PostBox } from "./styles"
@@ -35,4 +36,4 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nick
     )
 }
 
-export default Post
+export default memo(Post);

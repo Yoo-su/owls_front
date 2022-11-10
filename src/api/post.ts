@@ -1,5 +1,5 @@
 import { accessInstance } from "plugin/axios"
-import { CreatePostType } from "types";
+import { CreatePostType, PostType } from "types";
 
 const token = localStorage.getItem("token");
 
@@ -10,9 +10,10 @@ export const getAllPosts = async () => {
                 "Authorization": `Bearer ${token}`
             }
         })
-        return result;
-    } catch (err) {
-
+        return result
+    }
+    catch (err) {
+        throw err
     }
 }
 
@@ -24,16 +25,14 @@ export const createNewPost = async (postData: FormData) => {
             {
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             },
         )
 
         return result;
-    } catch (err) {
-        return {
-            success: false,
-            msg: err
-        }
+    }
+    catch (err) {
+        throw err
     }
 }
