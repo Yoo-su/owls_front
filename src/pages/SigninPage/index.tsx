@@ -33,7 +33,7 @@ const SignInPage = () => {
             .then(res => {
                 localStorage.setItem("token", res.data.access_token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
-                dispatch(setUser({ userEmail: res.data.user.email, userNickname: res.data.user.nickname }));
+                dispatch(setUser({ userEmail: res.data.user.email, userNickname: res.data.user.nickname, userAvatar: res.data.user.avatar }));
                 window.location.href = "/";
             })
             .catch((err) => {

@@ -5,6 +5,7 @@ import { UserSliceType } from "types";
 const initialState: UserSliceType = {
     userEmail: "",
     userNickname: "",
+    userAvatar: "",
 }
 
 const userSlice = createSlice({
@@ -12,9 +13,10 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<UserSliceType>) => {
-            const { userEmail, userNickname } = action.payload;
+            const { userEmail, userNickname, userAvatar } = action.payload;
             state.userEmail = userEmail;
             state.userNickname = userNickname;
+            state.userAvatar = userAvatar;
         }
 
     }
