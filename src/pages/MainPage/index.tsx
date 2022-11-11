@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, memo } from 'react'
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import PostInput from './PostInput';
+import PostDialog from './PostDialog';
 import { PostsWrapper, LoadingBox, EmptyContentBox } from './styles';
 import Post from './Post';
 import { useAppDispatch, useAppSelector } from "store/hook";
@@ -12,9 +13,10 @@ import { getAllPosts } from 'api/post';
 
 const MainPage = () => {
     const dispatch = useAppDispatch();
-    const { posts, postsLoading } = useAppSelector((state) => state.post);
+    const { posts, postsLoading, openPostDialog } = useAppSelector((state) => state.post);
 
     useEffect(() => {
+        console.log("메인 렌더")
         getAllPosts()
             .then(res => {
                 dispatch(setPosts(res.data.posts));
@@ -48,8 +50,9 @@ const MainPage = () => {
                 }
 
             </PostsWrapper>
+            {openPostDialog && (<PostDialog open={openPostDialog} />)}
         </Container>
     )
 }
 
-export default MainPage;
+export default memo(MainPage);
