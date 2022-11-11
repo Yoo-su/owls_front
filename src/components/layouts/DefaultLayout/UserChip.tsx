@@ -33,6 +33,7 @@ const UserChip = ({ profileImg, nickname }: Prop) => {
             />
             <Menu
                 id="basic-menu"
+                disableScrollLock={true}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
