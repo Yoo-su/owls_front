@@ -13,7 +13,8 @@ const App = () => {
       dispatch(
         setUser({
           userEmail: parsedUser.email,
-          userNickname: parsedUser.nickname
+          userNickname: parsedUser.nickname,
+          userAvatar: parsedUser.avatar,
         }))
     }
   })
