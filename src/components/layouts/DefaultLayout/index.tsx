@@ -48,7 +48,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 </IconButton>
 
                 <div className="currentUser">
-                    <UserChip profileImg="" nickname={user.userNickname} />
+                    <UserChip profileImg={user.userAvatar} nickname={user.userNickname} />
                 </div>
 
             </Appbar>
