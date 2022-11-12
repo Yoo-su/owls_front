@@ -19,7 +19,7 @@ export const PostBox = styled(Box)`
         margin:1rem 0.5rem;
 
         .profileImg{
-            border-radius:50%;
+            cursor:pointer;
         }
 
         .postInfo{
@@ -36,6 +36,17 @@ export const PostBox = styled(Box)`
             .postedDate{
                 font-size:1rem;
                 color: rgb(156 163 175);
+            }
+        }
+
+        .deleteBtn{
+            margin-left:auto;
+
+            :hover{
+                transform:scale(1.2);
+                .MuiSvgIcon-root{
+                    color: #9b1c31;
+                }
             }
         }
     }
@@ -56,6 +67,10 @@ export const PostBox = styled(Box)`
             img{
                 object-fit: contain;
                 height:100%;
+            }
+
+            @media all and (min-width: 0px) and (max-width:640px){
+                height:30rem;
             }
 
             

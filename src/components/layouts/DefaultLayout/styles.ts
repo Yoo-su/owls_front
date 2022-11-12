@@ -27,9 +27,12 @@ export const Sidebar = styled.div<Prop>`
         height:${prop => prop.appbarHeight}px;
         align-items: center;
         font-family: 'Island Moments', cursive;
-        font-size: 32px;
+        font-size: 48px;
         border-bottom:0.5px solid rgba(0,0,0,0.1);
         
+        img, b{
+            cursor:pointer;
+        }
         img{
             width:32px;
             margin-right:0.2rem;
@@ -39,7 +42,7 @@ export const Sidebar = styled.div<Prop>`
     .sideMenus{
         list-style: none;
         padding:0;
-        font-family: 'Roboto Slab', serif;
+        font-family: 'Gowun Dodum', sans-serif;
         width:100%;
         li{
             display:flex;
@@ -65,7 +68,9 @@ export const Sidebar = styled.div<Prop>`
             }
         }
     }
-
+    @media all and (min-width: 0px) and (max-width:640px) {
+        display:none;
+    }
 `;
 
 export const Content = styled.main<Prop>`
@@ -75,6 +80,10 @@ export const Content = styled.main<Prop>`
     transition:all 0.3s ease-in-out;
     background-color:#f9f6f2;
     min-height:100vh;
+
+    @media all and (min-width: 0px) and (max-width:640px) {
+        margin-left:0;
+    }
 `;
 
 export const Appbar = styled.div<Prop>`
@@ -104,5 +113,10 @@ export const Appbar = styled.div<Prop>`
         .MuiListItem-root{
             font-size:8px;
         }
+    }
+
+    @media all and (min-width: 0px) and (max-width:640px) {
+        margin-left:0;
+        width:100%;
     }
 `;

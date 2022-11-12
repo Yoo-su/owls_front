@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
 import UserChip from "./UserChip";
 import { useAppSelector } from "store/hook";
+import { useNavigate } from "react-router-dom";
 
 interface DefaultLayoutProps {
     children: React.ReactElement;
@@ -16,10 +17,13 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const [sidebarWidth, setSidebarWidth] = useState(260);
     const [appbarHeight, setAppbarHeight] = useState(70);
 
+    const navigate = useNavigate();
     return (
         <Wrapper>
             <Sidebar sidebarWidth={sidebarWidth} appbarHeight={appbarHeight}>
-                <div className="sidebarHeader">
+                <div className="sidebarHeader" onClick={() => {
+                    navigate("/");
+                }}>
                     <img src="/images/owl.png" />
                     <b>Owls</b>
                 </div>
@@ -27,7 +31,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 <ul className="sideMenus">
                     <li>
                         <GroupIcon />
-                        <b>Friends</b>
+                        <b>친구목록</b>
                     </li>
                 </ul>
             </Sidebar>

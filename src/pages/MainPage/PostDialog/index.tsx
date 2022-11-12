@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react';
 import { DialogProps } from '@mui/material/Dialog';
 import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
+import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+import MessageIcon from '@mui/icons-material/Message';
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { setOpenPostDialog } from 'store/slice/postSlice';
 import Box from "@mui/material/Box";
 import * as Styled from "./styles";
 import { createComment, getComments } from 'api/comment';
-import { setComments } from 'store/slice/postSlice';
+import { setComments, setCommentsLoading } from 'store/slice/postSlice';
 import Comment from './Comment';
+import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 
 interface Props {
     open: boolean;
 }
 const PostDialog = ({ open }: Props) => {
-    const { postDialog_image, postDialog_postId, postDialog_userEmail, comments } = useAppSelector((state) => state.post);
+    const { postDialog_image, postDialog_postId, postDialog_userEmail, comments, commentsLoading } = useAppSelector((state) => state.post);
     const { userNickname, userAvatar, userEmail } = useAppSelector((state) => state.user)
-    const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('xl');
+    const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('lg');
 
     const [inputText, setInputText] = useState("");
-
     const dispatch = useAppDispatch();
 
     const handleClose = () => {
+        dispatch(setCommentsLoading(true));
         dispatch(setOpenPostDialog(false));
     }
 
@@ -39,6 +41,11 @@ const PostDialog = ({ open }: Props) => {
             comment_post: postDialog_postId,
             comment_user: userEmail
         }).then(res => {
+            dispatch(setSnackInfo({
+                message: "댓글이 등록되었습니다",
+                type: "success"
+            }));
+            dispatch(setOpenSnack(true));
             dispatch(setComments([res.data[0], ...comments]));
             setInputText("");
         }).catch((err) => {
@@ -49,6 +56,7 @@ const PostDialog = ({ open }: Props) => {
     useEffect(() => {
         getComments(postDialog_postId).then(res => {
             dispatch(setComments(res.data.comments));
+            dispatch(setCommentsLoading(false));
         }).catch((err) => {
             dispatch(setComments([]));
         })
@@ -63,13 +71,13 @@ const PostDialog = ({ open }: Props) => {
             scroll='paper'
         >
             <Styled.PostDialogTitle>
-                <CloseIcon onClick={handleClose} />
+                <CloseIcon className="closeIcon" onClick={handleClose} />
             </Styled.PostDialogTitle>
 
             <Styled.PostDialogContent>
                 {postDialog_image && (
                     <Styled.ImageBox>
-                        <img src={postDialog_image} alt="postImage" />
+                        <img src={postDialog_image} alt="postImage" loading='lazy' />
                     </Styled.ImageBox>
                 )}
 
@@ -79,6 +87,7 @@ const PostDialog = ({ open }: Props) => {
                         <Styled.CommentInput
                             placeholder={userNickname.concat(" 님의 댓글을 남겨보세요 😀")}
                             onChange={(e) => { setInputText(e.target.value); }}
+                            value={inputText}
                         />
 
                         <Button
@@ -91,12 +100,21 @@ const PostDialog = ({ open }: Props) => {
                         </Button>
                     </Box>
 
-                    <Divider textAlign="left"><Chip label="댓글목록" /></Divider>
+                    <Divider textAlign="left">{comments.length}개의 댓글</Divider>
 
                     <Box className="comments">
-                        {comments.length > 0 ? comments.map(comment => (
-                            <Comment key={comment.comment_id} {...comment} />
-                        )) : (<></>)}
+                        {commentsLoading ? (
+                            <Styled.LoadingBox>
+                                <CircularProgress size={150} />
+                            </Styled.LoadingBox>
+                        ) :
+                            comments.length > 0 ? comments.map(comment => (
+                                <Comment key={comment.comment_id} {...comment} />
+                            )) : (
+                                <div className="noComments">
+                                    <MessageIcon />
+                                    <label>댓글을 남겨보세요</label>
+                                </div>)}
                     </Box>
                 </Styled.CommentsBox>
             </Styled.PostDialogContent>

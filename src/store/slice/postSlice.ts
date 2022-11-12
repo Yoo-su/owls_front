@@ -8,10 +8,11 @@ const initialState: PostSliceType = {
 
     openPostDialog: false,
     postDialog_image: "",
-    postDialog_postId: -1,
+    postDialog_postId: 0,
     postDialog_userEmail: "",
 
-    comments: []
+    comments: [],
+    commentsLoading: true,
 }
 
 const postSlice = createSlice({
@@ -39,9 +40,14 @@ const postSlice = createSlice({
 
         setComments: (state, action: PayloadAction<CommentType[]>) => {
             state.comments = action.payload;
+        },
+
+        setCommentsLoading: (state, action: PayloadAction<boolean>) => {
+            state.commentsLoading = action.payload;
         }
+
     }
 })
 
-export const { setPosts, setPostsLoading, setOpenPostDialog, setPostDialogInfo, setComments } = postSlice.actions;
+export const { setPosts, setPostsLoading, setOpenPostDialog, setPostDialogInfo, setComments, setCommentsLoading } = postSlice.actions;
 export default postSlice.reducer;

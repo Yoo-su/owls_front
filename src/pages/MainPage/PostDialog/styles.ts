@@ -16,6 +16,10 @@ export const PostDialogTitle = styled(DialogTitle)`
     justify-content: flex-end;
     background-color: #3d3935;
     color:#fff;
+
+    .closeIcon{
+        cursor:pointer;
+    }
 `;
 
 export const PostDialogContent = styled(DialogContent)`
@@ -28,12 +32,13 @@ export const PostDialogContent = styled(DialogContent)`
 export const ImageBox = styled(Box)`
     display:flex;
     justify-content: center;
-    height:52rem;
+    min-height:52rem;
+    width:100%;
     background-color: #404040;
 
     img{
         object-fit:contain;
-        height:100%;
+        min-width:70%;
     }
 `;
 
@@ -44,7 +49,7 @@ export const CommentsBox = styled(Box)`
         display:flex;
         align-items:center;
         justify-content:center;
-        margin:1rem 0;
+        margin:2.5rem 0;
 
         .userAvatar{
             margin-right:1rem;
@@ -55,10 +60,10 @@ export const CommentsBox = styled(Box)`
     }
 
     .comments{
-        height:18rem;
+        height:24rem;
         margin:0.5rem 0;
         padding:0 0.5rem;
-        background-color: #f5f0f0;
+        background-color: #fff;
         border-radius: 0.5rem;
         overflow-y:scroll;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -67,13 +72,34 @@ export const CommentsBox = styled(Box)`
             list-style: none;
             padding:0;
         }
+
+        .noComments{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:2rem;
+
+            .MuiSvgIcon-root{
+                font-size:10rem;
+                color:rgba(0,0,0,0.5);
+            }
+
+            label{
+                color: rgb(156 163 175);
+            }
+        }
     }
 `;
 
 export const CommentInput = styled(TextField)`
     width:50%;
 `
-
+export const LoadingBox = styled(Box)`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100%;
+`;
 
 interface CommentProps {
     order: number,
@@ -100,9 +126,20 @@ export const UserComment = styled.li<CommentProps>`
             display:flex;
             align-items: center;
             
+            b{
+                margin-left:0.5rem;
+            }
             label{
                 margin-left:1rem;
                 color: rgb(156 163 175);
+            }
+        }
+
+        .deleteBtn{
+            :hover{
+                .MuiSvgIcon-root{
+                    color:#9b1c31;
+                }
             }
         }
     }

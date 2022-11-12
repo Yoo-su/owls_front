@@ -31,3 +31,20 @@ export const createComment = async (data: CreateCommentType) => {
         throw err;
     }
 }
+
+export const deleteComment = async (comment_id: number) => {
+    try {
+        const result = await accessInstance.delete("comment/delete", {
+            data: {
+                comment_id
+            },
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        },
+        )
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}

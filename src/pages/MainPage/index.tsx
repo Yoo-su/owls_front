@@ -16,7 +16,6 @@ const MainPage = () => {
     const { posts, postsLoading, openPostDialog } = useAppSelector((state) => state.post);
 
     useEffect(() => {
-        console.log("메인 렌더")
         getAllPosts()
             .then(res => {
                 dispatch(setPosts(res.data.posts));
