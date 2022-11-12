@@ -36,3 +36,19 @@ export const createNewPost = async (postData: FormData) => {
         throw err
     }
 }
+
+export const deletePost = async (post_id: number) => {
+    try {
+        const result = accessInstance.delete("post/delete", {
+            data: {
+                post_id
+            },
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
