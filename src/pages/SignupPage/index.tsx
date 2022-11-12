@@ -9,17 +9,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import SnackAlert from 'components/common/SnackAlert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from 'api/user';
+import { useAppDispatch } from 'store/hook';
+import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
 
 const theme = createTheme();
 
 const SignupPage = () => {
-    /* 스낵바 알림 메시지 관련 state */
-    const [openAlert, setOpenAlert] = React.useState(false);
-    const [alertType, setAlertType] = React.useState<"success" | "danger" | "info">("success");
-    const [alertMsg, setAlertMsg] = React.useState("");
+    const dispatch = useAppDispatch();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -28,23 +26,28 @@ const SignupPage = () => {
         signup(data.get("name") || '', data.get("nickname") || '', data.get("email") || '', data.get("password") || '')
             .then(res => {
                 if (res.data.success === false) {
-                    setAlertMsg(res.data.msg);
-                    setAlertType("danger");
-                    setOpenAlert(true);
+                    dispatch(setSnackInfo({
+                        message: res.data.msg,
+                        type: "danger"
+                    }))
                 }
                 else {
-                    setAlertMsg("회원가입이 완료되었습니다");
-                    setAlertType("success");
-                    setOpenAlert(true);
+                    dispatch(setSnackInfo({
+                        message: "회원가입이 완료되었습니다",
+                        type: "success"
+                    }))
                     setTimeout(() => {
                         window.location.href = "/signin";
                     }, 2000);
                 }
+                dispatch(setOpenSnack(true));
             })
             .catch((err) => {
-                setAlertMsg("오류가 발생했습니다");
-                setAlertType("danger");
-                setOpenAlert(true);
+                dispatch(setSnackInfo({
+                    message: "오류가 발생했습니다",
+                    type: "danger"
+                }))
+                dispatch(setOpenSnack(true));
             })
     };
 
@@ -129,7 +132,6 @@ const SignupPage = () => {
                     </Box>
                 </Box>
             </Container>
-            <SnackAlert open={openAlert} setOpen={setOpenAlert} msg={alertMsg} alertType={alertType} />
         </ThemeProvider>
     );
 }

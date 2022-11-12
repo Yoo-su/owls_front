@@ -10,18 +10,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SnackAlert from 'components/common/SnackAlert';
 import { signin } from "api/user";
 import { useAppDispatch } from 'store/hook'
 import { setUser } from 'store/slice/userSlice';
+import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
 
 const theme = createTheme();
 
 const SignInPage = () => {
-    /* 스낵바 알림 관련 */
-    const [openAlert, setOpenAlert] = React.useState(false);
-    const [alertType, setAlertType] = React.useState<"success" | "danger" | "info">("success");
-    const [alertMsg, setAlertMsg] = React.useState("");
 
     const dispatch = useAppDispatch();
 
@@ -38,14 +34,19 @@ const SignInPage = () => {
             })
             .catch((err) => {
                 if (err.response.data.statusCode === 401) {
-                    setAlertMsg("로그인 정보를 확인해주세요");
+                    dispatch(setSnackInfo({
+                        message: "로그인 정보를 확인해주세요",
+                        type: "info"
+                    }))
+                    dispatch(setOpenSnack(true));
                 }
                 else {
-                    setAlertMsg("오류가 발생했습니다")
+                    dispatch(setSnackInfo({
+                        message: "오류가 발생했습니다",
+                        type: "danger"
+                    }))
+                    dispatch(setOpenSnack(true));
                 }
-                setAlertType("danger");
-                setOpenAlert(true);
-
             })
     };
 
@@ -111,7 +112,6 @@ const SignInPage = () => {
                     </Box>
                 </Box>
             </Container>
-            <SnackAlert open={openAlert} setOpen={setOpenAlert} msg={alertMsg} alertType={alertType} />
         </ThemeProvider>
     );
 }

@@ -1,16 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
 import { Snackbar as Snack } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
+import { useAppDispatch, useAppSelector } from "store/hook";
+import { setOpenSnack } from "store/slice/uiSlice";
 
-interface Props {
-    open: boolean;
-    setOpen: Dispatch<SetStateAction<boolean>>;
-    msg: string;
-    alertType: "success" | "danger" | "info"
-};
-
-const SnackAlert = ({ open, setOpen, msg, alertType }: Props) => {
+const SnackAlert = () => {
+    const dispatch = useAppDispatch();
+    const { snackMessage, snackType, openSnack } = useAppSelector((state) => state.ui)
     const handleStyle = (type: string) => {
         if (type === "success") {
             return {
@@ -37,7 +33,7 @@ const SnackAlert = ({ open, setOpen, msg, alertType }: Props) => {
             return;
         }
 
-        setOpen(false);
+        dispatch(setOpenSnack(false));
     };
 
     const action = (
@@ -47,13 +43,13 @@ const SnackAlert = ({ open, setOpen, msg, alertType }: Props) => {
     );
     return (
         <Snack
-            open={open}
+            open={openSnack}
             autoHideDuration={3000}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             onClose={handleClose}
-            message={msg}
+            message={snackMessage}
             action={action}
-            sx={handleStyle(alertType)}
+            sx={handleStyle(snackType)}
         />
     );
 };

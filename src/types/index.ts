@@ -13,6 +13,18 @@ export interface PostSliceType {
     postDialog_postId: number;
     postDialog_userEmail: string;
     comments: CommentType[];
+    commentsLoading: boolean;
+}
+
+export interface UiSliceType {
+    openSnack: boolean;
+    snackMessage: string;
+    snackType: "success" | "danger" | "info";
+}
+
+export interface SnackPayload {
+    message: string;
+    type: "success" | "danger" | "info";
 }
 
 export interface PostDialogPayload {

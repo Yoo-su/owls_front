@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Router from "router";
+import SnackAlert from "components/common/SnackAlert";
 import { setUser } from "store/slice/userSlice";
 import { useAppDispatch } from "store/hook";
 import "css/global.css";
@@ -22,6 +23,8 @@ const App = () => {
   return (
     <div className="App">
       <Router />
+
+      <SnackAlert />
     </div>
   );
 }
