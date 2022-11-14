@@ -1,5 +1,4 @@
 import { accessInstance } from "plugin/axios"
-import { CreatePostType, PostType } from "types";
 
 const token = localStorage.getItem("token");
 
