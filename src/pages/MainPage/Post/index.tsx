@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import Avatar from '@mui/material/Avatar';
+import AvatarMenu from "./AvatarMenu";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
 import { PostBox } from "./styles"
@@ -10,10 +10,12 @@ import { deletePost } from "api/post";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { setPosts } from "store/slice/postSlice";
 
-const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nickname, user_avatar }: PostType) => {
+interface Props extends PostType {
+    isMyPost: boolean;
+    isFriendPost: number;
+}
+const Post = ({ post_id, post_text, post_image, post_date, user_email, user_name, user_nickname, user_avatar, isMyPost, isFriendPost }: Props) => {
     const dispatch = useAppDispatch();
-    const { userEmail } = useAppSelector((state) => state.user);
-    const { posts } = useAppSelector((state) => state.post);
 
     const handleClick = () => {
         dispatch(setPostDialogInfo({
@@ -26,7 +28,7 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nick
 
     const handleDelete = () => {
         deletePost(post_id).then(res => {
-            dispatch(setPosts(posts.filter(post => post.post_id !== post_id)));
+            dispatch(setPosts(res.data));
             dispatch(setSnackInfo({
                 message: "게시물이 삭제되었습니다",
                 type: "info"
@@ -45,10 +47,10 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nick
         <PostBox>
             <div className="postHeader">
                 <div className="profileImg">
-                    <Avatar
-                        alt=""
-                        src={user_avatar}
-                        sx={{ width: 56, height: 56 }}
+                    <AvatarMenu
+                        source={user_avatar}
+                        isFriendPost={isFriendPost}
+                        authorEmail={user_email}
                     />
                 </div>
 
@@ -57,7 +59,7 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_nick
                     <label className="postedDate">{post_date}</label>
                 </div>
 
-                {(user_email === userEmail) && (
+                {isMyPost && (
                     <IconButton className="deleteBtn" onClick={handleDelete}>
                         <DeleteIcon />
                     </IconButton>

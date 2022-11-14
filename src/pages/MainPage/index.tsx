@@ -14,11 +14,16 @@ import { getAllPosts } from 'api/post';
 const MainPage = () => {
     const dispatch = useAppDispatch();
     const { posts, postsLoading, openPostDialog } = useAppSelector((state) => state.post);
+    const { userEmail, friends, friendRequests } = useAppSelector((state) => state.user);
+    const emails = [
+        ...friends.map(friend => friend.user_email),
+        ...friendRequests.map(req => req.user_email),
+        userEmail];
 
     useEffect(() => {
         getAllPosts()
             .then(res => {
-                dispatch(setPosts(res.data.posts));
+                dispatch(setPosts(res.data));
                 dispatch(setPostsLoading(false));
             })
             .catch((err) => {
@@ -40,7 +45,10 @@ const MainPage = () => {
                         <CircularProgress size={150} />
                     </LoadingBox>) :
                     (posts?.length > 0) ? posts.map(post => (
-                        <Post key={post.post_id} {...post} />
+                        <Post
+                            key={post.post_id} {...post}
+                            isMyPost={userEmail === post.user_email}
+                            isFriendPost={emails.findIndex(email => email === post.user_email)} />
                     )) : (
                         <EmptyContentBox>
                             <MoodBadIcon />
