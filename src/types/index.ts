@@ -1,8 +1,25 @@
 /* 스토어 관련 타입들 */
+export type Friend = {
+    friend_id: number;
+    user_email: string;
+    user_avatar: string;
+    user_nickname: string;
+}
 export interface UserSliceType {
     userEmail: string;
     userNickname: string;
+    userName: string;
     userAvatar: string;
+
+    friends: Friend[];
+    friendRequests: Friend[];
+}
+
+export interface SetUserPayload {
+    userEmail: string;
+    userAvatar: string;
+    userNickname: string;
+    userName: string;
 }
 
 export interface PostSliceType {
@@ -48,7 +65,7 @@ export interface PostType {
     post_text: string;
     post_image: string;
     post_date: string;
-    post_user: string;
+    user_name: string;
     user_email: string;
     user_avatar: string;
     user_nickname: string;
