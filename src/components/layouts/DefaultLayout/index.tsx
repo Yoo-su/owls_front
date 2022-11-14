@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
 import UserChip from "./UserChip";
+import Notification from "./Notification";
 import { useAppSelector } from "store/hook";
 import { useNavigate } from "react-router-dom";
 
@@ -50,6 +51,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 >
                     <MenuIcon />
                 </IconButton>
+
+                <Notification />
 
                 <div className="currentUser">
                     <UserChip profileImg={user.userAvatar} nickname={user.userNickname} />
