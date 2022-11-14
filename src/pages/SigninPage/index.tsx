@@ -28,8 +28,18 @@ const SignInPage = () => {
         signin(data.get('email') || '', data.get('password') || '')
             .then(res => {
                 localStorage.setItem("token", res.data.access_token);
-                localStorage.setItem("user", JSON.stringify(res.data.user));
-                dispatch(setUser({ userEmail: res.data.user.email, userNickname: res.data.user.nickname, userAvatar: res.data.user.avatar }));
+                localStorage.setItem("user", JSON.stringify({
+                    user_email: res.data.user_email,
+                    user_avatar: res.data.user_avatar,
+                    user_nickname: res.data.user_nickname,
+                    user_name: res.data.user_name,
+                }));
+                dispatch(setUser({
+                    userEmail: res.data.user_email,
+                    userNickname: res.data.user_nickname,
+                    userName: res.data.user_name,
+                    userAvatar: res.data.user_avatar,
+                }));
                 window.location.href = "/";
             })
             .catch((err) => {

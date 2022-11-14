@@ -62,32 +62,29 @@ const PostInput = () => {
             formData.append("file", filePickerRef.current?.files[0]);
         }
         formData.append("post_text", textareaRef.current?.value || "");
-        formData.append("post_date", date.toLocaleDateString() + date.toLocaleTimeString());
+        formData.append("post_date", date.toLocaleDateString() + " " + date.toLocaleTimeString());
         formData.append("post_user", userEmail)
 
         createNewPost(formData).then((res) => {
-            if (res.data.success == true) {
-                setSuccess(true);
-                setLoading(false);
-                dispatch(setSnackInfo({
-                    message: "게시물 등록이 완료되었습니다",
-                    type: "success"
-                }));
-                dispatch(setOpenSnack(true));
-                clearForm();
-                removeImage();
-                dispatch(setPosts([res.data.entity, ...posts]));
-                setTimeout(() => {
-                    setSuccess(false);
-                }, 3000);
-            }
-            else {
-                dispatch(setSnackInfo({
-                    message: "오류로 인해 등록에 실패했습니다",
-                    type: "danger"
-                }));
-                dispatch(setOpenSnack(true));
-            }
+            setSuccess(true);
+            setLoading(false);
+            dispatch(setSnackInfo({
+                message: "게시물 등록이 완료되었습니다",
+                type: "success"
+            }));
+            dispatch(setOpenSnack(true));
+            clearForm();
+            removeImage();
+            dispatch(setPosts(res.data));
+            setTimeout(() => {
+                setSuccess(false);
+            }, 3000);
+        }).catch(err => {
+            dispatch(setSnackInfo({
+                message: "오류로 인해 등록에 실패했습니다",
+                type: "danger"
+            }));
+            dispatch(setOpenSnack(true));
         })
     }
 
