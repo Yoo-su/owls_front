@@ -1,4 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Gowun+Dodum&family=Island+Moments&family=Nanum+Myeongjo&family=Roboto+Slab:wght@300&display=swap');
+
+html::-webkit-scrollbar {
+    display: none;
+}
+  
+  /* Hide scrollbar for IE and Edge */
+html{
+    -ms-overflow-style: none;
+}
+
 body{
     margin:0;
     padding:0;
