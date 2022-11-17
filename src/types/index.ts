@@ -4,6 +4,8 @@ export type Friend = {
     user_email: string;
     user_avatar: string;
     user_nickname: string;
+    updated_date: string;
+    created_date: string;
 }
 export interface UserSliceType {
     userEmail: string;
@@ -13,6 +15,9 @@ export interface UserSliceType {
 
     friends: Friend[];
     friendRequests: Friend[];
+
+    waitingRequests: Friend[];
+    loading: boolean;
 }
 
 export interface SetUserPayload {
@@ -29,6 +34,7 @@ export interface PostSliceType {
     postDialog_image: string;
     postDialog_postId: number;
     postDialog_userEmail: string;
+    postDialog_text: string;
     comments: CommentType[];
     commentsLoading: boolean;
 }
@@ -46,6 +52,7 @@ export interface SnackPayload {
 
 export interface PostDialogPayload {
     postDialog_image: string;
+    postDialog_text: string;
     postDialog_postId: number;
     postDialog_userEmail: string;
 }
