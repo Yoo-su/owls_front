@@ -5,9 +5,13 @@ import DialogContent from '@mui/material/DialogContent';
 import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
 
+
 export const PostDialog = styled(Dialog)`
     .MuiDialogContent-root{
         padding:0;
+        ::-webkit-scrollbar {
+            display: none;
+        }
     }
 `;
 
@@ -26,7 +30,7 @@ export const PostDialogContent = styled(DialogContent)`
     display:flex;
     flex-direction: column;
     height:100%;
-    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Gowun Dodum', serif;
 `;
 
 export const ImageBox = styled(Box)`
@@ -39,6 +43,17 @@ export const ImageBox = styled(Box)`
     img{
         object-fit:contain;
         min-width:70%;
+    }
+`;
+
+export const TextBox = styled(Box)`
+    margin:0.8rem 1rem;
+    padding:0 0.5rem;
+    border-radius: 10px;
+    border:0.5px solid rgba(0,0,0,0.2);
+    min-height:100px;
+    p{
+        line-height: 2;
     }
 `;
 
@@ -115,6 +130,10 @@ export const UserComment = styled.li<CommentProps>`
     ${props => props.master && "margin-left:auto"};
     background-color:${props => props.order === 0 ? 'rgba(0,0,0,0.1)' : props.order === 1 ?
         'rgba(34,140,34,0.1)' : props.order === 2 ? 'rgba(175,128,79,0.1)' : props.order === 3 ? 'rgba(85,170,255,0.1)' : 'rgba(255,210,52,0.1)'};
+
+    @media all and (min-width:0px) and (max-width:640px){
+        min-width:100%;
+    }
 
     .header{
         display:flex;

@@ -40,6 +40,8 @@ export const Sidebar = styled.div<Prop>`
     }
 
     .sideMenus{
+        display:flex;
+        flex-direction: column;
         list-style: none;
         padding:0;
         font-family: 'Gowun Dodum', sans-serif;
@@ -60,6 +62,7 @@ export const Sidebar = styled.div<Prop>`
             }
 
             b{
+                white-space: nowrap;
                 font-size:18px;
             }
 
