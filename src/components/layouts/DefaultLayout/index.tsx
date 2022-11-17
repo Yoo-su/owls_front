@@ -19,6 +19,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const [appbarHeight, setAppbarHeight] = useState(70);
 
     const navigate = useNavigate();
+
     return (
         <Wrapper>
             <Sidebar sidebarWidth={sidebarWidth} appbarHeight={appbarHeight}>
@@ -30,7 +31,9 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 </div>
 
                 <ul className="sideMenus">
-                    <li>
+                    <li onClick={() => {
+                        navigate("/friend");
+                    }}>
                         <GroupIcon />
                         <b>친구목록</b>
                     </li>
