@@ -1,11 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RouteGuard from './RouteGuard';
 import DefaultLayout from 'components/layouts/DefaultLayout';
 import MainPage from 'pages/MainPage';
 import SigninPage from 'pages/SigninPage';
 import SignupPage from 'pages/SignupPage';
 import ProfilePage from 'pages/ProfilePage';
+import FriendPage from 'pages/FriendPage';
 
 const Router = () => {
     return (
@@ -18,6 +18,10 @@ const Router = () => {
                 <Route path="/signup" element={<SignupPage />} />
 
                 <Route path="/profile" element={<RouteGuard children={<DefaultLayout><ProfilePage /></DefaultLayout>} />} />
+
+                <Route path="/friend" element={<RouteGuard children={<DefaultLayout><FriendPage /></DefaultLayout>} />} />
+
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
     )
