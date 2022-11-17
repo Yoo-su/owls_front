@@ -67,7 +67,7 @@ export const getFriends = async (user_email: string) => {
             }
         })
 
-        return result;
+        return result.data;
     } catch (err) {
         throw err;
     }
@@ -82,7 +82,22 @@ export const getFriendRequests = async (user_email: string) => {
             }
         })
 
-        return result;
+        return result.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const getMyRequests = async (user_email: string) => {
+    try {
+        const result = await accessInstance.get("friend/my-requests", {
+            params: { user_email: user_email },
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        return result.data;
     } catch (err) {
         throw err;
     }
