@@ -1,32 +1,26 @@
 import { useEffect } from "react";
 import Router from "router";
 import SnackAlert from "components/common/SnackAlert";
-import { setUser, setFriends } from "store/slice/userSlice";
+import { setUser } from "store/slice/userSlice";
 import { useAppDispatch } from "store/hook";
-import { getFriends } from "api/friend";
+import { get_friends } from "store/asyncThunks";
+import getLocalUser from "utils/getLocalUser";
 import "css/global.css";
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const user = getLocalUser();
+
   useEffect(() => {
-    const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user);
       dispatch(
         setUser({
-          userEmail: parsedUser.user_email,
-          userNickname: parsedUser.user_nickname,
-          userName: parsedUser.user_name,
-          userAvatar: parsedUser.user_avatar,
+          userEmail: user.user_email,
+          userNickname: user.user_nickname,
+          userName: user.user_name,
+          userAvatar: user.user_avatar,
         }))
-      getFriends(parsedUser.user_email).then(res => {
-        dispatch(setFriends(res.data));
-      }).catch(err => {
-        console.log(err);
-        localStorage.clear();
-        window.location.href = "signin";
-      })
-
+      dispatch(get_friends(user.user_email));
     }
   }, []);
 

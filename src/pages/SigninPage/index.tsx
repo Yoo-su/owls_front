@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from "api/user";
 import { useAppDispatch } from 'store/hook'
-import { setUser } from 'store/slice/userSlice';
 import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
 
 const theme = createTheme();
@@ -33,12 +32,6 @@ const SignInPage = () => {
                     user_avatar: res.data.user_avatar,
                     user_nickname: res.data.user_nickname,
                     user_name: res.data.user_name,
-                }));
-                dispatch(setUser({
-                    userEmail: res.data.user_email,
-                    userNickname: res.data.user_nickname,
-                    userName: res.data.user_name,
-                    userAvatar: res.data.user_avatar,
                 }));
                 window.location.href = "/";
             })

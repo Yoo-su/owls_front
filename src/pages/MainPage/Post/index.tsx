@@ -22,6 +22,7 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_name
             postDialog_image: post_image,
             postDialog_postId: post_id,
             postDialog_userEmail: user_email,
+            postDialog_text: post_text,
         }))
         dispatch(setOpenPostDialog(true));
     }

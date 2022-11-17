@@ -1,7 +1,6 @@
 import {
     configureStore,
     combineReducers,
-    getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import userReducer from "./slice/userSlice";
 import postReducer from "./slice/postSlice";
@@ -15,9 +14,6 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware({
-        serializableCheck: false,
-    }),
 });
 
 export default store;

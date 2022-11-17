@@ -9,12 +9,28 @@ export const getAllPosts = async () => {
                 "Authorization": `Bearer ${token}`
             }
         })
-        return result
+        return result.data;
     }
     catch (err) {
         throw err
     }
 }
+
+export const getFriendPosts = async (user_email: string) => {
+    try {
+        const result = await accessInstance.get("post/friend", {
+            params: { user_email: user_email },
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        return result.data
+    }
+    catch (err) {
+        throw err
+    }
+}
+
 
 export const createNewPost = async (postData: FormData) => {
 

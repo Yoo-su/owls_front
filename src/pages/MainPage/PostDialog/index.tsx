@@ -11,7 +11,8 @@ import { useAppDispatch, useAppSelector } from "store/hook";
 import { setOpenPostDialog } from 'store/slice/postSlice';
 import Box from "@mui/material/Box";
 import * as Styled from "./styles";
-import { createComment, getComments } from 'api/comment';
+import { createComment } from 'api/comment';
+import { get_comments } from 'store/asyncThunks';
 import { setComments, setCommentsLoading } from 'store/slice/postSlice';
 import Comment from './Comment';
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
@@ -20,7 +21,7 @@ interface Props {
     open: boolean;
 }
 const PostDialog = ({ open }: Props) => {
-    const { postDialog_image, postDialog_postId, postDialog_userEmail, comments, commentsLoading } = useAppSelector((state) => state.post);
+    const { postDialog_image, postDialog_postId, postDialog_text, postDialog_userEmail, comments, commentsLoading } = useAppSelector((state) => state.post);
     const { userNickname, userAvatar, userEmail } = useAppSelector((state) => state.user)
     const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('lg');
 
@@ -46,7 +47,7 @@ const PostDialog = ({ open }: Props) => {
                 type: "success"
             }));
             dispatch(setOpenSnack(true));
-            dispatch(setComments([res.data[0], ...comments]));
+            dispatch(setComments(res.data));
             setInputText("");
         }).catch((err) => {
             console.log(err);
@@ -54,12 +55,7 @@ const PostDialog = ({ open }: Props) => {
     }
 
     useEffect(() => {
-        getComments(postDialog_postId).then(res => {
-            dispatch(setComments(res.data.comments));
-            dispatch(setCommentsLoading(false));
-        }).catch((err) => {
-            dispatch(setComments([]));
-        })
+        dispatch(get_comments(postDialog_postId));
     }, []);
 
     return (
@@ -80,6 +76,10 @@ const PostDialog = ({ open }: Props) => {
                         <img src={postDialog_image} alt="postImage" loading='lazy' />
                     </Styled.ImageBox>
                 )}
+
+                <Styled.TextBox>
+                    <p>{postDialog_text}</p>
+                </Styled.TextBox>
 
                 <Styled.CommentsBox>
                     <Box className="inputField">

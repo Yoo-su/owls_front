@@ -5,13 +5,13 @@ const token = localStorage.getItem("token");
 
 export const getComments = async (postId: number) => {
     try {
-        const comments = await accessInstance.get("comment/all", {
+        const result = await accessInstance.get("comment/all", {
             params: { post_id: postId },
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         })
-        return comments;
+        return result.data;
     } catch (err) {
         throw err
     }

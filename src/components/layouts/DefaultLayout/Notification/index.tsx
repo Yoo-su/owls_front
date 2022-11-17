@@ -10,13 +10,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import * as Styled from "./styles";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useAppDispatch, useAppSelector } from "store/hook";
-import { setFriendRequests } from "store/slice/userSlice";
+import { setFriendRequests, setFriends } from "store/slice/userSlice";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
-import { makeFriend, deleteFriend, getFriendRequests } from "api/friend";
+import { makeFriend, deleteFriend } from "api/friend";
+import { get_friend_requests } from "store/asyncThunks";
 
 const Notification = () => {
     const dispatch = useAppDispatch();
-    const { friendRequests, userEmail } = useAppSelector(state => state.user);
+    const { friendRequests, friends, userEmail } = useAppSelector(state => state.user);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,6 +30,7 @@ const Notification = () => {
     const handleAccept = (friend_id: number) => {
 
         makeFriend(friend_id).then(res => {
+            dispatch(setFriends([...friends, res.data]));
             dispatch(setFriendRequests(friendRequests.filter(req => req.friend_id != friend_id)));
             dispatch(setSnackInfo({
                 message: "친구가 등록되었습니다",
@@ -60,14 +62,13 @@ const Notification = () => {
         })
     }
 
+    const getFunction = () => {
+        dispatch(get_friend_requests(userEmail));
+    }
+
     useEffect(() => {
-        const interval = setInterval(() => {
-            getFriendRequests(userEmail).then(res => {
-                dispatch(setFriendRequests(res.data));
-            }).catch(err => {
-                console.log(err);
-            })
-        }, 20000);
+        getFunction();
+        const interval = setInterval(getFunction, 20000);
 
         return () => clearInterval(interval);
     }, [userEmail]);
