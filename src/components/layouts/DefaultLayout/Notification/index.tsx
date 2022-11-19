@@ -17,7 +17,7 @@ import { get_friend_requests } from "store/asyncThunks";
 
 const Notification = () => {
     const dispatch = useAppDispatch();
-    const { friendRequests, friends, userEmail } = useAppSelector(state => state.user);
+    const { friendRequests, friends, userId } = useAppSelector(state => state.user);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,15 +63,18 @@ const Notification = () => {
     }
 
     const getFunction = () => {
-        dispatch(get_friend_requests(userEmail));
+        userId &&
+            dispatch(get_friend_requests(userId));
     }
 
     useEffect(() => {
-        getFunction();
-        const interval = setInterval(getFunction, 20000);
+        if (userId) {
+            getFunction();
+            const interval = setInterval(getFunction, 20000);
 
-        return () => clearInterval(interval);
-    }, [userEmail]);
+            return () => clearInterval(interval);
+        }
+    }, [userId]);
 
     return (
         <Fragment>

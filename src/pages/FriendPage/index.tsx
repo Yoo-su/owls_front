@@ -10,14 +10,14 @@ import { useAppSelector, useAppDispatch } from "store/hook";
 import { get_wating_requests } from "store/asyncThunks";
 
 const FriendPage = () => {
-    const { friends, userEmail, waitingRequests, loading } = useAppSelector((state) => state.user);
+    const { friends, userId, waitingRequests, loading } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (userEmail) {
-            dispatch(get_wating_requests(userEmail));
-        }
-    }, [userEmail])
+        userId &&
+            dispatch(get_wating_requests(userId));
+
+    }, [userId])
 
     return (
         <Container sx={{
@@ -42,8 +42,9 @@ const FriendPage = () => {
                                 <FriendCard
                                     key={friend.friend_id}
                                     friend_id={friend.friend_id}
-                                    friend_avatar={friend.user_avatar}
-                                    friend_nickname={friend.user_nickname}
+                                    friend_user_id={friend.user_id}
+                                    friend_user_avatar={friend.user_avatar}
+                                    friend_user_nickname={friend.user_nickname}
                                     created_date={friend.created_date}
                                 />
                             ))}
@@ -58,8 +59,9 @@ const FriendPage = () => {
                                 <FriendCard
                                     key={friend.friend_id}
                                     friend_id={friend.friend_id}
-                                    friend_avatar={friend.user_avatar}
-                                    friend_nickname={friend.user_nickname}
+                                    friend_user_id={friend.user_id}
+                                    friend_user_avatar={friend.user_avatar}
+                                    friend_user_nickname={friend.user_nickname}
                                     updated_date={friend.updated_date} />
                             ))}
                         </Box>

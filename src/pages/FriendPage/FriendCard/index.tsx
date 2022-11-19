@@ -9,16 +9,19 @@ import { deleteFriend } from "api/friend";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { setWatingRequests, setFriends } from "store/slice/userSlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     friend_id: number;
-    friend_avatar: string;
-    friend_nickname: string;
+    friend_user_id: number;
+    friend_user_avatar: string;
+    friend_user_nickname: string;
     created_date?: string;
     updated_date?: string;
 }
 
-const FriendCard = ({ friend_id, friend_avatar, friend_nickname, created_date, updated_date }: Props) => {
+const FriendCard = ({ friend_id, friend_user_id, friend_user_avatar, friend_user_nickname, created_date, updated_date }: Props) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { waitingRequests, friends } = useAppSelector((state) => state.user);
 
@@ -49,7 +52,7 @@ const FriendCard = ({ friend_id, friend_avatar, friend_nickname, created_date, u
         <Styled.Wrapper>
 
             <Box className="avatar">
-                <Avatar src={friend_avatar} alt="friend_avatar" sx={{ width: 84, height: 84 }} />
+                <Avatar src={friend_user_avatar} alt="friend_avatar" sx={{ width: 84, height: 84 }} />
 
             </Box>
 
@@ -58,7 +61,9 @@ const FriendCard = ({ friend_id, friend_avatar, friend_nickname, created_date, u
 
             <Box className="info">
                 <Tooltip title="프로필" placement="top">
-                    <b>{friend_nickname}</b>
+                    <b onClick={() => {
+                        navigate(`/profile/${friend_user_id}`)
+                    }}>{friend_user_nickname}</b>
                 </Tooltip>
                 {updated_date && (<label>{updated_date} 등록</label>)}
                 {created_date && (<label>{created_date} 요청</label>)}

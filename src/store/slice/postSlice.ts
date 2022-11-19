@@ -10,8 +10,9 @@ const initialState: PostSliceType = {
     openPostDialog: false,
     postDialog_image: "",
     postDialog_text: "",
-    postDialog_postId: 0,
+    postDialog_postId: null,
     postDialog_userEmail: "",
+    postDIalog_userId: null,
 
     comments: [],
     commentsLoading: true,

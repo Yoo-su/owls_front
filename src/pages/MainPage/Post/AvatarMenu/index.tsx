@@ -6,14 +6,16 @@ import * as Styled from "./styles";
 import { useAppSelector, useAppDispatch } from "store/hook";
 import { createFriend } from "api/friend";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     source: string;
-    isFriendPost: number;
-    authorEmail: string;
+    isFriendPost: number | undefined;
+    authorId: number;
 }
-const AvatarMenu = ({ source, isFriendPost, authorEmail }: Props) => {
-    const { userEmail } = useAppSelector((state) => state.user);
+const AvatarMenu = ({ source, isFriendPost, authorId }: Props) => {
+    const navigate = useNavigate();
+    const { userId } = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -26,24 +28,25 @@ const AvatarMenu = ({ source, isFriendPost, authorEmail }: Props) => {
     };
 
     const sendFriendRequest = () => {
-        createFriend(userEmail, authorEmail).then(res => {
-            if (res.data.message) {
-                dispatch(setSnackInfo({
-                    message: res.data.message,
-                    type: "info"
-                }));
-                dispatch(setOpenSnack(true));
-            } else {
-                dispatch(setSnackInfo({
-                    message: "친구요청을 전송했습니다",
-                    type: "info"
-                }))
-                dispatch(setOpenSnack(true));
-            }
+        userId &&
+            createFriend(userId, authorId).then(res => {
+                if (res.data.message) {
+                    dispatch(setSnackInfo({
+                        message: res.data.message,
+                        type: "info"
+                    }));
+                    dispatch(setOpenSnack(true));
+                } else {
+                    dispatch(setSnackInfo({
+                        message: "친구요청을 전송했습니다",
+                        type: "info"
+                    }))
+                    dispatch(setOpenSnack(true));
+                }
 
-        }).catch(err => {
-            console.log(err)
-        })
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
     return (
@@ -62,7 +65,9 @@ const AvatarMenu = ({ source, isFriendPost, authorEmail }: Props) => {
                 onClose={handleClose}
                 disableAutoFocusItem={true}
             >
-                <MenuItem onClick={handleClose}><Styled.Label>프로필</Styled.Label></MenuItem>
+                <MenuItem onClick={() => {
+                    navigate(`/profile/${authorId}`)
+                }}><Styled.Label>프로필</Styled.Label></MenuItem>
                 {(isFriendPost === -1) && (<MenuItem onClick={sendFriendRequest}><Styled.Label>친구추가</Styled.Label></MenuItem>)}
             </Menu>
         </Fragment>

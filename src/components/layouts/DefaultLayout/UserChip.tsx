@@ -10,9 +10,10 @@ import { useNavigate } from "react-router-dom";
 interface Prop {
     profileImg: string;
     nickname: string;
+    userId: number | null;
 }
 
-const UserChip = ({ profileImg, nickname }: Prop) => {
+const UserChip = ({ profileImg, nickname, userId }: Prop) => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -42,7 +43,7 @@ const UserChip = ({ profileImg, nickname }: Prop) => {
                 }}
             >
                 <MenuItem onClick={() => {
-                    navigate("/profile")
+                    userId && navigate(`/profile/${userId}`)
                 }}>
                     <Face5Icon />&nbsp;내 프로필
                 </MenuItem>

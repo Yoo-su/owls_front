@@ -4,23 +4,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
 import { PostBox } from "./styles"
 import { PostType } from "types"
-import { useAppDispatch, useAppSelector } from "store/hook";
+import { useAppDispatch } from "store/hook";
 import { setPostDialogInfo, setOpenPostDialog } from "store/slice/postSlice";
 import { deletePost } from "api/post";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { setPosts } from "store/slice/postSlice";
 
 interface Props extends PostType {
-    isMyPost: boolean;
-    isFriendPost: number;
+    isMyPost?: boolean;
+    isFriendPost?: number;
 }
-const Post = ({ post_id, post_text, post_image, post_date, user_email, user_name, user_nickname, user_avatar, isMyPost, isFriendPost }: Props) => {
+const Post = ({ post_id, post_text, post_image, post_date, user_id, user_email, user_name, user_nickname, user_avatar, isMyPost, isFriendPost }: Props) => {
     const dispatch = useAppDispatch();
 
     const handleClick = () => {
         dispatch(setPostDialogInfo({
             postDialog_image: post_image,
             postDialog_postId: post_id,
+            postDialog_userId: user_id,
             postDialog_userEmail: user_email,
             postDialog_text: post_text,
         }))
@@ -51,7 +52,7 @@ const Post = ({ post_id, post_text, post_image, post_date, user_email, user_name
                     <AvatarMenu
                         source={user_avatar}
                         isFriendPost={isFriendPost}
-                        authorEmail={user_email}
+                        authorId={user_id}
                     />
                 </div>
 

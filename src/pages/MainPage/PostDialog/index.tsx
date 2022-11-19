@@ -22,7 +22,7 @@ interface Props {
 }
 const PostDialog = ({ open }: Props) => {
     const { postDialog_image, postDialog_postId, postDialog_text, postDialog_userEmail, comments, commentsLoading } = useAppSelector((state) => state.post);
-    const { userNickname, userAvatar, userEmail } = useAppSelector((state) => state.user)
+    const { userNickname, userAvatar, userId } = useAppSelector((state) => state.user)
     const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('lg');
 
     const [inputText, setInputText] = useState("");
@@ -36,11 +36,11 @@ const PostDialog = ({ open }: Props) => {
     const handleSubmit = () => {
         const date = new Date();
 
-        createComment({
+        (postDialog_postId && userId) && createComment({
             comment_text: inputText,
             comment_date: date.toLocaleDateString() + date.toLocaleTimeString(),
             comment_post: postDialog_postId,
-            comment_user: userEmail
+            comment_user: userId
         }).then(res => {
             dispatch(setSnackInfo({
                 message: "댓글이 등록되었습니다",
@@ -55,7 +55,7 @@ const PostDialog = ({ open }: Props) => {
     }
 
     useEffect(() => {
-        dispatch(get_comments(postDialog_postId));
+        postDialog_postId && dispatch(get_comments(postDialog_postId));
     }, []);
 
     return (

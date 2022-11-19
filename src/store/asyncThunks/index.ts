@@ -9,7 +9,7 @@ export const get_all_posts = createAsyncThunk<PostType[]>(
     getAllPosts
 )
 
-export const get_friends_posts = createAsyncThunk<PostType[], string>(
+export const get_friends_posts = createAsyncThunk<PostType[], number>(
     "GET_FRIENDS_POSTS",
     getFriendPosts
 )
@@ -19,17 +19,17 @@ export const get_comments = createAsyncThunk<CommentType[], number>(
     getComments
 );
 
-export const get_friends = createAsyncThunk<Friend[], string>(
+export const get_friends = createAsyncThunk<Friend[], number>(
     "GET_FRIENDS",
     getFriends
 )
 
-export const get_wating_requests = createAsyncThunk<Friend[], string>(
+export const get_wating_requests = createAsyncThunk<Friend[], number>(
     "GET_WAITING_REQUESTS",
     getMyRequests
 )
 
-export const get_friend_requests = createAsyncThunk<Friend[], string>(
+export const get_friend_requests = createAsyncThunk<Friend[], number>(
     "GET_FRIEND_REQUESTS",
     getFriendRequests
 )

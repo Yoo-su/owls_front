@@ -21,12 +21,12 @@ const MainPage = () => {
     const [postOpt, setPostOpt] = useState<string>("전체");
 
     const dispatch = useAppDispatch();
-    const { posts, postsLoading, openPostDialog } = useAppSelector((state) => state.post);
-    const { userEmail, friends, friendRequests } = useAppSelector((state) => state.user);
-    const emails = [
-        ...friends.map(friend => friend.user_email),
-        ...friendRequests.map(req => req.user_email),
-        userEmail];
+    const { posts, postsLoading } = useAppSelector((state) => state.post);
+    const { userId, friends, friendRequests } = useAppSelector((state) => state.user);
+    const ids = [
+        ...friends.map(friend => friend.user_id),
+        ...friendRequests.map(req => req.user_id),
+        userId];
 
     const ITEMS_PER_PAGE = 5;
     const {
@@ -40,7 +40,7 @@ const MainPage = () => {
         }
         if (value === "친구") {
             setPostOpt("친구");
-            dispatch(get_friends_posts(userEmail));
+            userId && dispatch(get_friends_posts(userId));
         }
         else if (value === "전체") {
             setPostOpt("전체");
@@ -49,6 +49,7 @@ const MainPage = () => {
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         dispatch(get_all_posts());
     }, []);
 
@@ -88,8 +89,8 @@ const MainPage = () => {
                     (posts?.length > 0) ? getCurrentData().map(post => (
                         <Post
                             key={post.post_id} {...post}
-                            isMyPost={userEmail === post.user_email}
-                            isFriendPost={emails.findIndex(email => email === post.user_email)} />
+                            isMyPost={userId === post.user_id}
+                            isFriendPost={ids.findIndex(id => id === post.user_id)} />
                     )) : (
                         <EmptyContentBox>
                             <MoodBadIcon />
@@ -100,7 +101,7 @@ const MainPage = () => {
             </PostsWrapper>
 
             {
-                !postsLoading && (
+                (!postsLoading && posts.length > 0) && (
                     <Pagination>
                         <Paginator
                             onPageChange={(_, newPage) => {
@@ -113,8 +114,6 @@ const MainPage = () => {
                     </Pagination>
                 )
             }
-
-            {openPostDialog && (<PostDialog open={openPostDialog} />)}
         </Container >
     )
 }

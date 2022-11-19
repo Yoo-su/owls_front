@@ -15,12 +15,13 @@ const App = () => {
     if (user) {
       dispatch(
         setUser({
+          userId: user.user_id,
           userEmail: user.user_email,
           userNickname: user.user_nickname,
           userName: user.user_name,
           userAvatar: user.user_avatar,
         }))
-      dispatch(get_friends(user.user_email));
+      dispatch(get_friends(user.user_id));
     }
   }, []);
 

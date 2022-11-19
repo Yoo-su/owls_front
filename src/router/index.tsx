@@ -17,7 +17,7 @@ const Router = () => {
 
                 <Route path="/signup" element={<SignupPage />} />
 
-                <Route path="/profile" element={<RouteGuard children={<DefaultLayout><ProfilePage /></DefaultLayout>} />} />
+                <Route path="/profile/:id" element={<RouteGuard children={<DefaultLayout><ProfilePage /></DefaultLayout>} />} />
 
                 <Route path="/friend" element={<RouteGuard children={<DefaultLayout><FriendPage /></DefaultLayout>} />} />
 

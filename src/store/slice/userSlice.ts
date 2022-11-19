@@ -4,6 +4,7 @@ import { UserSliceType, Friend, SetUserPayload } from "types";
 import { get_friends, get_wating_requests, get_friend_requests } from 'store/asyncThunks';
 
 const initialState: UserSliceType = {
+    userId: null,
     userEmail: "",
     userNickname: "",
     userName: "",
@@ -20,7 +21,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<SetUserPayload>) => {
-            const { userEmail, userNickname, userName, userAvatar } = action.payload;
+            const { userId, userEmail, userNickname, userName, userAvatar } = action.payload;
+            state.userId = userId;
             state.userEmail = userEmail;
             state.userNickname = userNickname;
             state.userName = userName;

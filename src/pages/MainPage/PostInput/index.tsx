@@ -15,7 +15,7 @@ import { setPosts } from 'store/slice/postSlice';
 import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
 
 const PostInput = () => {
-    const { userEmail } = useAppSelector((state) => state.user);
+    const { userId } = useAppSelector((state) => state.user);
     const { posts } = useAppSelector((state) => state.post);
     const dispatch = useAppDispatch();
 
@@ -63,7 +63,7 @@ const PostInput = () => {
         }
         formData.append("post_text", textareaRef.current?.value || "");
         formData.append("post_date", date.toLocaleDateString() + " " + date.toLocaleTimeString());
-        formData.append("post_user", userEmail)
+        userId && formData.append("post_user", userId.toString())
 
         createNewPost(formData).then((res) => {
             setSuccess(true);
@@ -85,6 +85,8 @@ const PostInput = () => {
                 type: "danger"
             }));
             dispatch(setOpenSnack(true));
+            setSuccess(false);
+            setLoading(false);
         })
     }
 
