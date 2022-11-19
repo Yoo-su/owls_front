@@ -28,6 +28,7 @@ const SignInPage = () => {
             .then(res => {
                 localStorage.setItem("token", res.data.access_token);
                 localStorage.setItem("user", JSON.stringify({
+                    user_id: res.data.user_id,
                     user_email: res.data.user_email,
                     user_avatar: res.data.user_avatar,
                     user_nickname: res.data.user_nickname,
@@ -100,12 +101,8 @@ const SignInPage = () => {
                         >
                             로그인
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
+                        <Grid container direction="row-reverse" spacing={3}>
+
                             <Grid item>
                                 <Link href="/signup" variant="body2">
                                     {"회원가입"}
