@@ -30,9 +30,6 @@ export const Sidebar = styled.div<Prop>`
         font-size: 48px;
         border-bottom:0.5px solid rgba(0,0,0,0.1);
         
-        img, b{
-            cursor:pointer;
-        }
         img{
             width:32px;
             margin-right:0.2rem;

@@ -62,7 +62,7 @@ export const PostBox = styled(Box)`
             justify-content: center;
             position: relative;
             overflow:hidden;
-            height:48rem;
+            height:42rem;
             background-color: #fbfbf8;
             img{
                 object-fit: contain;
