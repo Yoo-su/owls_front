@@ -3,7 +3,7 @@ import { DialogProps } from '@mui/material/Dialog';
 import Divider from "@mui/material/Divider";
 import CircularProgress from '@mui/material/CircularProgress';
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import MessageIcon from '@mui/icons-material/Message';
@@ -83,21 +83,21 @@ const PostDialog = ({ open }: Props) => {
 
                 <Styled.CommentsBox>
                     <Box className="inputField">
-                        <Avatar className="userAvatar" src={userAvatar} sx={{ width: 56, height: 56 }} />
+                        <Avatar className="userAvatar" src={userAvatar} />
                         <Styled.CommentInput
                             placeholder={userNickname.concat(" 님의 댓글을 남겨보세요 😀")}
                             onChange={(e) => { setInputText(e.target.value); }}
                             value={inputText}
+                            size="medium"
                         />
 
-                        <Button
+                        <IconButton
                             className="submitBtn"
                             size='large'
-                            variant="contained"
                             onClick={handleSubmit}
                         >
                             <SendIcon />
-                        </Button>
+                        </IconButton>
                     </Box>
 
                     <Divider textAlign="left">{comments.length}개의 댓글</Divider>

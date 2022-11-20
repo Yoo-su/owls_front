@@ -12,9 +12,11 @@ export const PostsWrapper = styled.div`
         align-items:center;
         font-family: 'Gowun Batang';
         font-size:24px;
-
-        .select{
-
+        
+        @media all and (min-width: 0px) and (max-width:640px) {
+            h2{
+                font-size:1.5rem;
+            }
         }
     }
 `;

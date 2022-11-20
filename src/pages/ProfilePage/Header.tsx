@@ -52,7 +52,7 @@ const Header = ({ user, postsCnt, friendsCnt, paramId, loggedInUserId }: Props) 
         <Styled.UserBox>
             <Box className="head">
                 <Box className="basicInfo">
-                    <Avatar src={user.user_avatar} sx={{ width: 184, height: 184 }} />
+                    <Avatar className="avatar" src={user.user_avatar} />
                     <b>{user.user_nickname} 님</b>
                 </Box>
 

@@ -44,6 +44,13 @@ export const ImageBox = styled(Box)`
         object-fit:contain;
         min-width:70%;
     }
+
+    @media all and (min-width: 0px) and (max-width:640px){
+        min-height:20rem;
+        img{
+            width:100%;
+        }
+    }
 `;
 
 export const TextBox = styled(Box)`
@@ -54,6 +61,15 @@ export const TextBox = styled(Box)`
     min-height:100px;
     p{
         line-height: 2;
+    }
+
+    @media all and (min-width: 0px) and (max-width:640px){
+        min-height:auto;
+        padding:0.1rem;
+        p{
+            line-height: 1;
+            font-size:0.8rem;
+        }
     }
 `;
 
@@ -71,6 +87,24 @@ export const CommentsBox = styled(Box)`
         }
         .submitBtn{
             margin-left:1rem;
+            .MuiSvgIcon-root{
+                width:56px;
+                height:56px;
+                color:#0E86FE;
+            }
+        }
+
+        @media all and (min-width: 0px) and (max-width:640px){
+            margin:0rem;
+            margin-bottom:.5rem;
+
+            .submitBtn{
+                margin-left:0.2rem;
+                .MuiSvgIcon-root{
+                    width:24px;
+                    height:24px;
+                }
+            }
         }
     }
 
@@ -83,6 +117,10 @@ export const CommentsBox = styled(Box)`
         overflow-y:scroll;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         
+        @media all and (min-width: 0px) and (max-width:640px){
+            height:14rem;
+        }
+
         ul{
             list-style: none;
             padding:0;
@@ -97,6 +135,13 @@ export const CommentsBox = styled(Box)`
             .MuiSvgIcon-root{
                 font-size:10rem;
                 color:rgba(0,0,0,0.5);
+
+                @media all and (min-width: 0px) and (max-width:640px){
+                    font-size:2rem;
+                }
+            }
+            @media all and (min-width: 0px) and (max-width:640px) {
+                font-size:0.5rem;
             }
 
             label{
@@ -108,6 +153,16 @@ export const CommentsBox = styled(Box)`
 
 export const CommentInput = styled(TextField)`
     width:50%;
+    .MuiInputBase-input{
+        font-family:"Gowun Dodum";
+    }
+
+    @media all and (min-width: 0px) and (max-width:640px){
+        flex-grow:1;
+        .MuiInputBase-input{
+            font-size:0.6rem;
+        }
+    }
 `
 export const LoadingBox = styled(Box)`
     display:flex;

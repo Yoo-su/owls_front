@@ -9,9 +9,8 @@ import InputLabel from '@mui/material/InputLabel';
 import Divider from "@mui/material/Divider";
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import PostInput from './PostInput';
-import PostDialog from './PostDialog';
 import { PostsWrapper, LoadingBox, EmptyContentBox, Pagination } from './styles';
-import Post from './Post';
+import Post from 'components/Post';
 import Paginator from 'components/common/Paginator';
 import usePagination from 'hooks/usePagination';
 import { useAppDispatch, useAppSelector } from "store/hook";
@@ -62,7 +61,7 @@ const MainPage = () => {
                     <h2>{postOpt} 게시물 목록 🦉</h2>
 
                     <Box className="select" sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
+                        <FormControl fullWidth size="small">
                             <InputLabel id="post-select-option-label">옵션</InputLabel>
 
                             <Select

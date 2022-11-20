@@ -25,6 +25,22 @@ export const UserBox = styled(Box)`
             flex-direction: column;
             align-items: center;
             padding:0.5rem;
+
+            .MuiAvatar-root{
+                width: 184px;
+                height:184px;
+            
+                @media all and (min-width: 0px) and (max-width:640px){
+                    width:82px;
+                    height:82px;
+                }
+            }
+            @media all and (min-width: 0px) and (max-width:640px){
+                b{
+                    font-size:0.8rem;
+                }
+            }
+            
         }
 
         .info{
@@ -38,6 +54,10 @@ export const UserBox = styled(Box)`
             flex-direction: column;
             align-items:center;
             font-size:28px;
+
+            @media all and (min-width: 0px) and (max-width:640px){
+                font-size:18px;
+            }
         }
         }
     }
@@ -64,6 +84,7 @@ export const UserPostsBox = styled(Box)`
 export const LoadingBox = styled(Box)`
     display:flex;
     justify-content: center;
+    margin-top:8rem;
 
 `;
 
@@ -77,4 +98,5 @@ export const EmptyBox = styled(Box)`
     display:flex;
     align-items: center;
     justify-content: center;
+    padding-top:3rem;
 `;
