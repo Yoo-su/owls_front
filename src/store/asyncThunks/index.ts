@@ -1,7 +1,8 @@
 import { createAsyncThunk, } from '@reduxjs/toolkit'
-import { PostType, Friend, CommentType } from 'types'
+import { PostType, Friend, CommentType, Profile } from 'types'
 import { getAllPosts, getFriendPosts } from 'api/post'
 import { getComments } from 'api/comment';
+import { getProfile } from "api/user";
 import { getFriends, getMyRequests, getFriendRequests } from "api/friend";
 
 export const get_all_posts = createAsyncThunk<PostType[]>(
@@ -32,4 +33,9 @@ export const get_wating_requests = createAsyncThunk<Friend[], number>(
 export const get_friend_requests = createAsyncThunk<Friend[], number>(
     "GET_FRIEND_REQUESTS",
     getFriendRequests
+)
+
+export const get_user_profile = createAsyncThunk<Profile, number>(
+    "GET_USER_PROFILE",
+    getProfile,
 )

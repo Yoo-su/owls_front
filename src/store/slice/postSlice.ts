@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { PostDialogPayload, PostSliceType, PostType, CommentType } from "types";
-import { get_all_posts, get_friends_posts, get_comments } from 'store/asyncThunks';
+import { get_all_posts, get_friends_posts, get_comments, get_user_profile } from 'store/asyncThunks';
 
 const initialState: PostSliceType = {
     posts: [],
@@ -105,6 +105,13 @@ const postSlice = createSlice({
         builder.addCase(
             get_comments.rejected, (state, action) => {
                 state.commentsLoading = false;
+            }
+        )
+
+        //profile posts
+        builder.addCase(
+            get_user_profile.fulfilled, (state, action) => {
+                state.posts = action.payload.posts;
             }
         )
     }

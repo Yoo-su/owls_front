@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { UserSliceType, Friend, SetUserPayload } from "types";
-import { get_friends, get_wating_requests, get_friend_requests } from 'store/asyncThunks';
+import { get_friends, get_wating_requests, get_friend_requests, get_user_profile } from 'store/asyncThunks';
 
 const initialState: UserSliceType = {
     userId: null,
@@ -14,6 +14,8 @@ const initialState: UserSliceType = {
     friendRequests: [],
     waitingRequests: [],
     loading: true,
+
+    profile: null,
 }
 
 const userSlice = createSlice({
@@ -85,6 +87,28 @@ const userSlice = createSlice({
         )
         builder.addCase(
             get_friend_requests.rejected, (state, action) => {
+            }
+        )
+
+
+        //profile
+        builder.addCase(
+            get_user_profile.pending, (state, action) => {
+                state.loading = true;
+            }
+        )
+        builder.addCase(
+            get_user_profile.fulfilled, (state, action) => {
+                state.profile = {
+                    user: action.payload.user,
+                    friends: action.payload.friends,
+                };
+                state.loading = false;
+            }
+        )
+        builder.addCase(
+            get_user_profile.rejected, (state, action) => {
+                state.loading = false;
             }
         )
     }

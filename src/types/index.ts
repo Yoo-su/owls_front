@@ -20,6 +20,7 @@ export interface UserSliceType {
 
     waitingRequests: Friend[];
     loading: boolean;
+    profile: ProfileUser | null;
 }
 
 export interface SetUserPayload {
@@ -98,4 +99,19 @@ export interface CreateCommentType {
     comment_date: string;
     comment_post: number;
     comment_user: number;
+}
+
+export interface ProfileUser {
+    user: {
+        user_nickname: string;
+        user_email: string;
+        user_name: string;
+        user_avatar: string;
+        user_id: number;
+    },
+    friends: Friend[],
+}
+
+export interface Profile extends ProfileUser {
+    posts: PostType[],
 }
