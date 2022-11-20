@@ -32,10 +32,18 @@ export const PostBox = styled(Box)`
             .author{
                 font-weight: 500;
                 font-size:1.25rem;
+
+                @media all and (min-width: 0px) and (max-width:640px){
+                    font-size:1rem;
+                }
             }
             .postedDate{
                 font-size:1rem;
                 color: rgb(156 163 175);
+                
+                @media all and (min-width: 0px) and (max-width:640px){
+                    font-size:0.6rem;
+                }
             }
         }
 
@@ -70,7 +78,7 @@ export const PostBox = styled(Box)`
             }
 
             @media all and (min-width: 0px) and (max-width:640px){
-                height:30rem;
+                height:20rem;
             }
 
             
@@ -80,6 +88,11 @@ export const PostBox = styled(Box)`
             margin:1rem 0;
             padding:0 1rem;
             min-height:7rem;
+
+            @media all and (min-width: 0px) and (max-width:640px){
+                font-size:0.8rem;
+                min-height:3rem;
+            }
         }
     }
 `;

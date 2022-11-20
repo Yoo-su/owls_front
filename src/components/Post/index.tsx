@@ -1,10 +1,10 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import AvatarMenu from "./AvatarMenu";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
 import { PostBox } from "./styles"
 import { PostType } from "types"
-import { useAppDispatch } from "store/hook";
+import { useAppDispatch, useAppSelector } from "store/hook";
 import { setPostDialogInfo, setOpenPostDialog } from "store/slice/postSlice";
 import { deletePost } from "api/post";
 import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
@@ -14,8 +14,10 @@ interface Props extends PostType {
     isMyPost?: boolean;
     isFriendPost?: number;
 }
+
 const Post = ({ post_id, post_text, post_image, post_date, user_id, user_email, user_name, user_nickname, user_avatar, isMyPost, isFriendPost }: Props) => {
     const dispatch = useAppDispatch();
+    const { posts } = useAppSelector(state => state.post);
 
     const handleClick = () => {
         dispatch(setPostDialogInfo({
@@ -30,7 +32,7 @@ const Post = ({ post_id, post_text, post_image, post_date, user_id, user_email, 
 
     const handleDelete = () => {
         deletePost(post_id).then(res => {
-            dispatch(setPosts(res.data));
+            dispatch(setPosts(posts.filter(post => post.post_id !== post_id)));
             dispatch(setSnackInfo({
                 message: "게시물이 삭제되었습니다",
                 type: "info"
