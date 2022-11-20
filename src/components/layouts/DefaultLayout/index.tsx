@@ -1,5 +1,5 @@
 import { useState, memo } from "react";
-import { Wrapper, Sidebar, Content, Appbar } from "./styles";
+import { Wrapper, Sidebar, Content, Appbar, LinkTab } from "./styles";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
@@ -7,7 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import UserChip from "./UserChip";
 import Notification from "./Notification";
 import { useAppSelector } from "store/hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PostDialog from "pages/MainPage/PostDialog";
 
 interface DefaultLayoutProps {
@@ -21,6 +21,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     const [appbarHeight, setAppbarHeight] = useState(70);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <Wrapper>
@@ -31,19 +32,25 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 </div>
 
                 <ul className="sideMenus">
-                    <li onClick={() => {
-                        navigate("/");
-                    }}>
+                    <LinkTab
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                        active={location.pathname === "/"}
+                    >
                         <DashboardIcon />
                         <b>메인</b>
-                    </li>
+                    </LinkTab>
 
-                    <li onClick={() => {
-                        navigate("/friend");
-                    }}>
+                    <LinkTab
+                        onClick={() => {
+                            navigate("/friend");
+                        }}
+                        active={location.pathname === "/friend"}
+                    >
                         <GroupIcon />
                         <b>친구목록</b>
-                    </li>
+                    </LinkTab>
                 </ul>
             </Sidebar>
 

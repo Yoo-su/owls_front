@@ -43,15 +43,26 @@ export const Sidebar = styled.div<Prop>`
         padding:0;
         font-family: 'Gowun Dodum', sans-serif;
         width:100%;
-        li{
+        
+    }
+    @media all and (min-width: 0px) and (max-width:640px) {
+        display:none;
+    }
+`;
+
+interface LinkTabProps {
+    active: boolean;
+}
+export const LinkTab = styled.li<LinkTabProps>`
             display:flex;
             align-items: center;
             cursor:pointer;
             justify-content: center;
             padding:1rem 0;
-            margin:0 0.5rem;
+            margin:0.1rem 0.5rem;
             border-radius:10px;
-
+            ${props => props.active && "color:#0E86FE;"}
+            ${props => props.active && "background-color:#F3F6F9;"}
             .MuiSvgIcon-root{
                 width:35px;
                 height:35px;
@@ -64,13 +75,8 @@ export const Sidebar = styled.div<Prop>`
             }
 
             :hover{
-                background-color: rgba(0,0,0,0.2);
+                ${props => !props.active && "background-color:rgba(0,0,0,0.1);"}
             }
-        }
-    }
-    @media all and (min-width: 0px) and (max-width:640px) {
-        display:none;
-    }
 `;
 
 export const Content = styled.main<Prop>`
