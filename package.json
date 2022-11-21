@@ -52,6 +52,5 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.26"
-  },
-  "proxy": "https://resolute-planet-367917.du.r.appspot.com"
+  }
 }

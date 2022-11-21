@@ -5,7 +5,7 @@ const token = localStorage.getItem("token");
 
 export const getComments = async (postId: number) => {
     try {
-        const result = await accessInstance.get("/comment/all", {
+        const result = await accessInstance.get("https://resolute-planet-367917.du.r.appspot.com/comment/all", {
             params: { post_id: postId },
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -19,7 +19,7 @@ export const getComments = async (postId: number) => {
 
 export const createComment = async (data: CreateCommentType) => {
     try {
-        const result = await accessInstance.post("/comment/create", {
+        const result = await accessInstance.post("https://resolute-planet-367917.du.r.appspot.com/comment/create", {
             ...data
         }, {
             headers: {
@@ -34,7 +34,7 @@ export const createComment = async (data: CreateCommentType) => {
 
 export const deleteComment = async (comment_id: number) => {
     try {
-        const result = await accessInstance.delete("/comment/delete", {
+        const result = await accessInstance.delete("https://resolute-planet-367917.du.r.appspot.com/comment/delete", {
             data: {
                 comment_id
             },

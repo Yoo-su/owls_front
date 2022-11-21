@@ -56,7 +56,7 @@ export const InputBox = styled(Box)`
                 }
             }
         }
-    }
+    
 
         .thumbnail{
             display:flex;

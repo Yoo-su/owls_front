@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 
 export const getAllPosts = async () => {
     try {
-        const result = await accessInstance.get("/post/all", {
+        const result = await accessInstance.get("https://resolute-planet-367917.du.r.appspot.com/post/all", {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -18,7 +18,7 @@ export const getAllPosts = async () => {
 
 export const getFriendPosts = async (user_id: number) => {
     try {
-        const result = await accessInstance.get("/post/friend", {
+        const result = await accessInstance.get("https://resolute-planet-367917.du.r.appspot.com/post/friend", {
             params: { user_id: user_id },
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -35,7 +35,7 @@ export const getFriendPosts = async (user_id: number) => {
 export const createNewPost = async (postData: FormData) => {
 
     try {
-        const result = await accessInstance.post("/post/create",
+        const result = await accessInstance.post("https://resolute-planet-367917.du.r.appspot.com/post/create",
             postData,
             {
                 headers: {
@@ -54,7 +54,7 @@ export const createNewPost = async (postData: FormData) => {
 
 export const deletePost = async (post_id: number) => {
     try {
-        const result = accessInstance.delete("/post/delete", {
+        const result = accessInstance.delete("https://resolute-planet-367917.du.r.appspot.com/post/delete", {
             data: {
                 post_id
             },
