@@ -11,6 +11,10 @@ export const Wrapper = styled(Box)`
     margin:1rem;
     width:fit-content;
     
+    @media all and (min-width: 0px) and (max-width:640px){
+            margin:1rem 0;
+        }
+
     .avatar{
         padding:1rem;
     }
