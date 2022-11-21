@@ -13,7 +13,6 @@ instance.interceptors.response.use(
 
 
 export const accessInstance = axios.create({
-    withCredentials: true,
     timeout: 10000,
 })
 
