@@ -68,7 +68,7 @@ export const TextBox = styled(Box)`
         padding:0.1rem;
         p{
             line-height: 1;
-            font-size:0.6rem;
+            font-size:0.7rem;
         }
     }
 `;

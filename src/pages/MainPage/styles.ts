@@ -19,6 +19,16 @@ export const PostsWrapper = styled.div`
                 font-size:1.5rem;
             }
         }
+
+        .select{
+            @media all and (min-width: 0px) and (max-width:640px){
+                .MuiInputBase-root{
+                    font-size:0.8rem;
+                }
+
+            }
+            
+        }
     }
 `;
 
