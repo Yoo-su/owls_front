@@ -74,6 +74,11 @@ export const UserBox = styled(Box)`
         position:absolute;
         top:1rem;
         right:2rem;
+
+        @media all and (min-width: 0px) and (max-width:640px){
+            top:0.2rem;
+            right:0.2rem;
+        }
     }
 `;
 

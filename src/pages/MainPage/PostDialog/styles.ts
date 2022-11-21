@@ -201,7 +201,6 @@ export const UserComment = styled.li<CommentProps>`
 
     @media all and (min-width:0px) and (max-width:640px){
         min-width:90%;
-        font-size:0.7rem;
     }
 
     .header{
@@ -217,10 +216,19 @@ export const UserComment = styled.li<CommentProps>`
             
             b{
                 margin-left:0.5rem;
+
+                @media all and (min-width: 0px) and (max-width:640px){
+                    font-size:0.7rem;
+                }
             }
             label{
                 margin-left:1rem;
                 color: rgb(156 163 175);
+
+                @media all and (min-width: 0px) and (max-width:640px){
+                    margin-left:0.5rem;
+                    font-size:0.4rem;
+                }
             }
 
             .MuiAvatar-root{
@@ -248,11 +256,17 @@ export const UserComment = styled.li<CommentProps>`
                 .MuiSvgIcon-root{
                     font-size:0.9rem;
                 }
+                top: 0.02rem;
+                right: 0.02rem;
             }
         }
     }
 
     .content{
         padding:0.1rem 0.5rem;
+
+        @media all and (min-width: 0px) and (max-width:640px){
+             font-size:0.7rem;
+        }
     }
 `;
