@@ -16,7 +16,6 @@ import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
 
 const PostInput = () => {
     const { userId } = useAppSelector((state) => state.user);
-    const { posts } = useAppSelector((state) => state.post);
     const dispatch = useAppDispatch();
 
     const [imageToPost, setImageToPost] = useState(null);
@@ -122,15 +121,15 @@ const PostInput = () => {
                 <IconButton onClick={() => {
                     filePickerRef.current?.click();
                 }}>
-                    <ImageIcon className="addImgIcon" fontSize='large' />
+                    <ImageIcon className="addImgIcon" />
                 </IconButton>
-                <Box sx={{ m: 1, position: 'relative', zIndex: 5 }}>
+                <Box className="fab" sx={{ position: 'relative', zIndex: 5 }}>
                     <Fab
                         aria-label="save"
                         color="primary"
                         sx={buttonSx}
                         onClick={submitPost}>
-                        {success ? <CheckIcon /> : <SendIcon />}
+                        {success ? <CheckIcon className="checkIcon" /> : <SendIcon className="sendIcon" />}
                     </Fab>
                     {loading && (
                         <CircularProgress

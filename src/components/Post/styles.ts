@@ -18,6 +18,11 @@ export const PostBox = styled(Box)`
         padding:0 1.25rem;
         margin:1rem 0.5rem;
 
+        @media all and (min-width: 0px) and (max-width:640px){
+            padding:0 0.5rem;
+            margin-top:0;
+        }
+
         .profileImg{
             cursor:pointer;
         }

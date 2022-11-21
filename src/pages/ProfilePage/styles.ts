@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 
 export const ProfileContainer = styled(Container)`
     padding:2rem 0;
-    font-family:"Gowun Dodum";
+    
 `;
 
 export const UserBox = styled(Box)`
@@ -15,6 +15,7 @@ export const UserBox = styled(Box)`
     border-radius:1rem;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     padding:1rem;
+    font-family: 'Jua', sans-serif;
 
     .head{
         display:flex;
@@ -29,7 +30,8 @@ export const UserBox = styled(Box)`
             .MuiAvatar-root{
                 width: 184px;
                 height:184px;
-            
+                margin-bottom:0.5rem;
+                
                 @media all and (min-width: 0px) and (max-width:640px){
                     width:82px;
                     height:82px;

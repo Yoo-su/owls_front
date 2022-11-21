@@ -34,6 +34,30 @@ export const InputBox = styled(Box)`
         margin-top:0.5rem;
         padding:0 0.5rem;
     
+        .addImgIcon{
+            width:32px;
+            height:32px;
+
+            @media all and (min-width: 0px) and (max-width:640px){
+                width:28px;
+                height:28px;
+            }
+        }
+
+        .fab{
+            margin:1rem;
+            
+            @media all and (min-width: 0px) and (max-width:640px){
+                margin:0.2rem;
+
+                .MuiButtonBase-root{
+                    width:40px;
+                    height:40px;
+                }
+            }
+        }
+    }
+
         .thumbnail{
             display:flex;
             flex-grow:1;
@@ -76,4 +100,8 @@ export const StyledTextarea = styled.textarea`
     padding:0.5rem;
     font-size:18px;
     font-family: 'Gowun Batang', serif;
+
+    @media all and (min-width: 0px) and (max-width:640px){
+        font-size:0.8rem;
+    }
 `;

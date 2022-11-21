@@ -10,9 +10,10 @@ export const PostsWrapper = styled.div`
         display:flex;
         justify-content:space-between;
         align-items:center;
-        font-family: 'Gowun Batang';
+        font-family: 'Noto Serif KR', serif;
         font-size:24px;
-        
+        white-space: nowrap;
+
         @media all and (min-width: 0px) and (max-width:640px) {
             h2{
                 font-size:1.5rem;

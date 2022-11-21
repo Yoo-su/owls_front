@@ -68,7 +68,7 @@ export const TextBox = styled(Box)`
         padding:0.1rem;
         p{
             line-height: 1;
-            font-size:0.8rem;
+            font-size:0.6rem;
         }
     }
 `;
@@ -82,9 +82,16 @@ export const CommentsBox = styled(Box)`
         justify-content:center;
         margin:2.5rem 0;
 
-        .userAvatar{
+        .MuiAvatar-root{
+            width:64px;
+            height:64px;
+            @media all and (min-width: 0px) and (max-width:640px){
+                width:40px;
+                height:40px;
+            }
             margin-right:1rem;
         }
+   
         .submitBtn{
             margin-left:1rem;
             .MuiSvgIcon-root{
@@ -95,8 +102,8 @@ export const CommentsBox = styled(Box)`
         }
 
         @media all and (min-width: 0px) and (max-width:640px){
-            margin:0rem;
-            margin-bottom:.5rem;
+            margin:0 0.5rem;
+            margin-bottom:.8rem;
 
             .submitBtn{
                 margin-left:0.2rem;
@@ -105,6 +112,12 @@ export const CommentsBox = styled(Box)`
                     height:24px;
                 }
             }
+        }
+    }
+
+    .divider{
+        @media all and (min-width: 0px) and (max-width:640px){
+            font-size:0.8rem;
         }
     }
 
@@ -187,14 +200,16 @@ export const UserComment = styled.li<CommentProps>`
         'rgba(34,140,34,0.1)' : props.order === 2 ? 'rgba(175,128,79,0.1)' : props.order === 3 ? 'rgba(85,170,255,0.1)' : 'rgba(255,210,52,0.1)'};
 
     @media all and (min-width:0px) and (max-width:640px){
-        min-width:100%;
+        min-width:90%;
+        font-size:0.7rem;
     }
 
     .header{
+        position: relative;
         display:flex;
         align-items:center;
         justify-content: space-between;
-        padding:0.3rem 0.5rem;
+        padding:0.5rem;
 
         .info{
             display:flex;
@@ -207,12 +222,31 @@ export const UserComment = styled.li<CommentProps>`
                 margin-left:1rem;
                 color: rgb(156 163 175);
             }
+
+            .MuiAvatar-root{
+                width:52px;
+                height:52px;
+
+                @media all and (min-width: 0px) and (max-width:640px){
+                    width:32px;
+                    height:32px;
+                }
+            }
         }
 
         .deleteBtn{
+            position: absolute;
+            top:0.2rem;
+            right:0.2rem;
+
             :hover{
                 .MuiSvgIcon-root{
                     color:#9b1c31;
+                }
+            }
+            @media all and (min-width: 0px) and (max-width:640px){
+                .MuiSvgIcon-root{
+                    font-size:0.9rem;
                 }
             }
         }

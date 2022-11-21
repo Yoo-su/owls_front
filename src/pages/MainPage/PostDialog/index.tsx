@@ -100,7 +100,7 @@ const PostDialog = ({ open }: Props) => {
                         </IconButton>
                     </Box>
 
-                    <Divider textAlign="left">{comments.length}개의 댓글</Divider>
+                    <Divider textAlign="left" className="divider">{comments.length}개의 댓글</Divider>
 
                     <Box className="comments">
                         {commentsLoading ? (

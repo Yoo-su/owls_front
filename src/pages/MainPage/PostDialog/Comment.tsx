@@ -37,7 +37,7 @@ const Comment = ({ comment_id, comment_date, comment_text, user_email, user_avat
         <UserComment order={comment_id % 5} master={userEmail === user_email}>
             <div className="header">
                 <div className="info">
-                    <Avatar src={user_avatar} sx={{ width: 52, height: 52 }} />
+                    <Avatar src={user_avatar} />
                     <b>{user_nickname}</b>
                     <label>{comment_date}</label>
                 </div>

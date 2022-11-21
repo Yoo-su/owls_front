@@ -58,7 +58,7 @@ const MainPage = () => {
 
             <PostsWrapper>
                 <div className="postsHeader">
-                    <h2>{postOpt} 게시물 목록 🦉</h2>
+                    <h2>{postOpt} 게시물 목록</h2>
 
                     <Box className="select" sx={{ minWidth: 120 }}>
                         <FormControl fullWidth size="small">
