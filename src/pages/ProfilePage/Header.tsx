@@ -3,9 +3,9 @@ import IconButton from "@mui/material/IconButton";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import { useAppDispatch, useAppSelector } from "store/hook";
+import { useAppSelector } from "store/hook";
 import { createFriend } from "api/friend";
-import { setSnackInfo, setOpenSnack } from "store/slice/uiSlice";
+import useSnack from "hooks/useSnack";
 
 interface Props {
     user: {
@@ -22,29 +22,22 @@ interface Props {
 }
 
 const Header = ({ user, postsCnt, friendsCnt, paramId, loggedInUserId }: Props) => {
-    const dispatch = useAppDispatch();
     const { friends } = useAppSelector(state => state.user);
+    const { activateSnack } = useSnack();
 
     const sendFriendRequest = () => {
 
         loggedInUserId &&
             createFriend(loggedInUserId, user.user_id).then(res => {
                 if (res.data.message) {
-                    dispatch(setSnackInfo({
-                        message: res.data.message,
-                        type: "info"
-                    }));
-                    dispatch(setOpenSnack(true));
+                    activateSnack(res.data.message, "info");
                 } else {
-                    dispatch(setSnackInfo({
-                        message: "친구요청을 전송했습니다",
-                        type: "info"
-                    }))
-                    dispatch(setOpenSnack(true));
+                    activateSnack("친구요청을 전송했습니다", "info");
                 }
 
             }).catch(err => {
                 console.log(err)
+                activateSnack("오류가 발생했습니다", "danger");
             })
     }
 

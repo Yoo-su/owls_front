@@ -6,10 +6,10 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import { deleteFriend } from "api/friend";
-import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { setWatingRequests, setFriends } from "store/slice/userSlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { useNavigate } from "react-router-dom";
+import useSnack from "hooks/useSnack";
 
 interface Props {
     friend_id: number;
@@ -24,24 +24,17 @@ const FriendCard = ({ friend_id, friend_user_id, friend_user_avatar, friend_user
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { waitingRequests, friends } = useAppSelector((state) => state.user);
+    const { activateSnack } = useSnack();
 
     const handleClick = () => {
         deleteFriend(friend_id).then(res => {
             if (created_date) {
                 dispatch(setWatingRequests(waitingRequests.filter(req => req.friend_id !== friend_id)))
-                dispatch(setSnackInfo({
-                    message: "요청을 취소했습니다",
-                    type: "info"
-                }))
-                dispatch(setOpenSnack(true));
+                activateSnack("요청을 취소했습니다", "info");
             }
             else if (updated_date) {
                 dispatch(setFriends(friends.filter(friend => friend.friend_id !== friend_id)));
-                dispatch(setSnackInfo({
-                    message: "삭제되었습니다",
-                    type: "info"
-                }))
-                dispatch(setOpenSnack(true));
+                activateSnack("삭제되었습니다", "info");
             }
         }).catch(err => {
             console.log(err);

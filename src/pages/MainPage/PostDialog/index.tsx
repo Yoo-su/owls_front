@@ -15,7 +15,7 @@ import { createComment } from 'api/comment';
 import { get_comments } from 'store/asyncThunks';
 import { setComments, setCommentsLoading } from 'store/slice/postSlice';
 import Comment from './Comment';
-import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
+import useSnack from 'hooks/useSnack';
 
 interface Props {
     open: boolean;
@@ -23,6 +23,7 @@ interface Props {
 const PostDialog = ({ open }: Props) => {
     const { postDialog_image, postDialog_postId, postDialog_text, postDialog_userEmail, comments, commentsLoading } = useAppSelector((state) => state.post);
     const { userNickname, userAvatar, userId } = useAppSelector((state) => state.user)
+    const { activateSnack } = useSnack();
     const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('lg');
 
     const [inputText, setInputText] = useState("");
@@ -42,15 +43,12 @@ const PostDialog = ({ open }: Props) => {
             comment_post: postDialog_postId,
             comment_user: userId
         }).then(res => {
-            dispatch(setSnackInfo({
-                message: "댓글이 등록되었습니다",
-                type: "success"
-            }));
-            dispatch(setOpenSnack(true));
+            activateSnack("댓글이 등록되었습니다", "success");
             dispatch(setComments(res.data));
             setInputText("");
         }).catch((err) => {
             console.log(err);
+            activateSnack("오류로 인해 댓글 등록에 실패했습니다", "danger");
         })
     }
 

@@ -8,9 +8,10 @@ import { CommentType } from "types";
 import { useAppSelector, useAppDispatch } from "store/hook";
 import { setComments } from "store/slice/postSlice";
 import { deleteComment } from "api/comment";
-import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
+import useSnack from "hooks/useSnack";
 
 const Comment = ({ comment_id, comment_date, comment_text, user_email, user_avatar, user_nickname }: CommentType) => {
+    const { activateSnack } = useSnack();
     const { userEmail } = useAppSelector((state) => state.user);
     const { comments } = useAppSelector((state) => state.post);
     const dispatch = useAppDispatch();
@@ -18,18 +19,10 @@ const Comment = ({ comment_id, comment_date, comment_text, user_email, user_avat
     const handleDelete = () => {
         deleteComment(comment_id).then(res => {
             dispatch(setComments(comments.filter(comment => comment.comment_id !== comment_id)));
-            dispatch(setSnackInfo({
-                message: "댓글 삭제가 완료되었습니다",
-                type: "info"
-            }))
-            dispatch(setOpenSnack(true));
+            activateSnack("댓글 삭제가 완료되었습니다", "info");
         }).catch((err) => {
             console.log(err);
-            dispatch(setSnackInfo({
-                message: "오류로 인해 삭제 실패했습니다",
-                type: "danger"
-            }));
-            dispatch(setOpenSnack(true));
+            activateSnack("오류로 인해 삭제 실패했습니다", "danger");
         })
     }
 

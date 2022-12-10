@@ -11,14 +11,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signin } from "api/user";
-import { useAppDispatch } from 'store/hook'
-import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
+import useSnack from 'hooks/useSnack';
 
 const theme = createTheme();
 
 const SignInPage = () => {
-
-    const dispatch = useAppDispatch();
+    const { activateSnack } = useSnack();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,18 +36,10 @@ const SignInPage = () => {
             })
             .catch((err) => {
                 if (err.response.data.statusCode === 401) {
-                    dispatch(setSnackInfo({
-                        message: "로그인 정보를 확인해주세요",
-                        type: "info"
-                    }))
-                    dispatch(setOpenSnack(true));
+                    activateSnack("로그인 정보를 확인해주세요", "info");
                 }
                 else {
-                    dispatch(setSnackInfo({
-                        message: "오류가 발생했습니다",
-                        type: "danger"
-                    }))
-                    dispatch(setOpenSnack(true));
+                    activateSnack("오류가 발생했습니다", "danger");
                 }
             })
     };

@@ -7,8 +7,8 @@ import { PostType } from "types"
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { setPostDialogInfo, setOpenPostDialog } from "store/slice/postSlice";
 import { deletePost } from "api/post";
-import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { setPosts } from "store/slice/postSlice";
+import useSnack from "hooks/useSnack";
 
 interface Props extends PostType {
     isMyPost?: boolean;
@@ -18,6 +18,7 @@ interface Props extends PostType {
 const Post = ({ post_id, post_text, post_image, post_date, user_id, user_email, user_name, user_nickname, user_avatar, isMyPost, isFriendPost }: Props) => {
     const dispatch = useAppDispatch();
     const { posts } = useAppSelector(state => state.post);
+    const { activateSnack } = useSnack();
 
     const handleClick = () => {
         dispatch(setPostDialogInfo({
@@ -33,17 +34,10 @@ const Post = ({ post_id, post_text, post_image, post_date, user_id, user_email, 
     const handleDelete = () => {
         deletePost(post_id).then(res => {
             dispatch(setPosts(posts.filter(post => post.post_id !== post_id)));
-            dispatch(setSnackInfo({
-                message: "게시물이 삭제되었습니다",
-                type: "info"
-            }))
-            dispatch(setOpenSnack(true));
+            activateSnack("게시물이 삭제되었습니다", "info");
         }).catch((err) => {
-            dispatch(setSnackInfo({
-                message: "게시물 삭제중 오류가 발생했습니다",
-                type: "danger"
-            }))
-            dispatch(setOpenSnack(true));
+            activateSnack("오류로 인해 삭제 실패했습니다", "danger");
+            throw err;
         })
     }
 

@@ -12,10 +12,11 @@ import { InputBox, StyledTextarea } from './styles'
 import { useAppSelector, useAppDispatch } from "store/hook";
 import { createNewPost } from 'api/post';
 import { setPosts } from 'store/slice/postSlice';
-import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
+import useSnack from 'hooks/useSnack';
 
 const PostInput = () => {
     const { userId } = useAppSelector((state) => state.user);
+    const { activateSnack } = useSnack();
     const dispatch = useAppDispatch();
 
     const [imageToPost, setImageToPost] = useState(null);
@@ -67,11 +68,7 @@ const PostInput = () => {
         createNewPost(formData).then((res) => {
             setSuccess(true);
             setLoading(false);
-            dispatch(setSnackInfo({
-                message: "게시물 등록이 완료되었습니다",
-                type: "success"
-            }));
-            dispatch(setOpenSnack(true));
+            activateSnack("게시물 등록이 완료되었습니다", "success");
             clearForm();
             removeImage();
             dispatch(setPosts(res.data));
@@ -79,11 +76,7 @@ const PostInput = () => {
                 setSuccess(false);
             }, 3000);
         }).catch(err => {
-            dispatch(setSnackInfo({
-                message: "오류로 인해 등록에 실패했습니다",
-                type: "danger"
-            }));
-            dispatch(setOpenSnack(true));
+            activateSnack("오류로 인해 게시물 등록에 실패했습니다", "danger");
             setSuccess(false);
             setLoading(false);
         })

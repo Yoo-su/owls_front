@@ -11,13 +11,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signup } from 'api/user';
-import { useAppDispatch } from 'store/hook';
-import { setOpenSnack, setSnackInfo } from 'store/slice/uiSlice';
+import useSnack from 'hooks/useSnack';
 
 const theme = createTheme();
 
 const SignupPage = () => {
-    const dispatch = useAppDispatch();
+    const { activateSnack } = useSnack();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -26,28 +25,17 @@ const SignupPage = () => {
         signup(data.get("name") || '', data.get("nickname") || '', data.get("email") || '', data.get("password") || '')
             .then(res => {
                 if (res.data.success === false) {
-                    dispatch(setSnackInfo({
-                        message: res.data.msg,
-                        type: "danger"
-                    }))
+                    activateSnack(res.data.msg, "danger");
                 }
                 else {
-                    dispatch(setSnackInfo({
-                        message: "회원가입이 완료되었습니다",
-                        type: "success"
-                    }))
+                    activateSnack("회원가입이 완료되었습니다", "success");
                     setTimeout(() => {
                         window.location.href = "/signin";
                     }, 2000);
                 }
-                dispatch(setOpenSnack(true));
             })
             .catch((err) => {
-                dispatch(setSnackInfo({
-                    message: "오류가 발생했습니다",
-                    type: "danger"
-                }))
-                dispatch(setOpenSnack(true));
+                activateSnack("오류가 발생했습니다", "danger");
             })
     };
 

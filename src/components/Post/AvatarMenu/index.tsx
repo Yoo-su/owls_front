@@ -3,10 +3,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import * as Styled from "./styles";
-import { useAppSelector, useAppDispatch } from "store/hook";
+import { useAppSelector } from "store/hook";
 import { createFriend } from "api/friend";
-import { setOpenSnack, setSnackInfo } from "store/slice/uiSlice";
 import { useNavigate } from 'react-router-dom';
+import useSnack from "hooks/useSnack";
 
 interface Props {
     source: string;
@@ -16,7 +16,7 @@ interface Props {
 const AvatarMenu = ({ source, isFriendPost, authorId }: Props) => {
     const navigate = useNavigate();
     const { userId } = useAppSelector((state) => state.user);
-    const dispatch = useAppDispatch();
+    const { activateSnack } = useSnack();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -31,17 +31,9 @@ const AvatarMenu = ({ source, isFriendPost, authorId }: Props) => {
         userId &&
             createFriend(userId, authorId).then(res => {
                 if (res.data.message) {
-                    dispatch(setSnackInfo({
-                        message: res.data.message,
-                        type: "info"
-                    }));
-                    dispatch(setOpenSnack(true));
+                    activateSnack(res.data.message, "info");
                 } else {
-                    dispatch(setSnackInfo({
-                        message: "친구요청을 전송했습니다",
-                        type: "info"
-                    }))
-                    dispatch(setOpenSnack(true));
+                    activateSnack("친구요청을 전송했습니다", "info");
                 }
 
             }).catch(err => {
